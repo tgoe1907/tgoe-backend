@@ -1,5 +1,6 @@
 package org.tgoe.core.member.services.api;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import javax.ws.rs.ProcessingException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.cxf.ext.logging.LoggingFeature;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +62,7 @@ public class EasyVerein {
 			
 			
 			if( res.getStatus() != 200) {
-				throw new EasyVereinException("getMemberGroups - service returned unexpected status - " + res.getStatusInfo());
+				throw new EasyVereinException("getMemberGroups - service returned unexpected status - " + res.getStatus());
 			}
 	
 			try {
@@ -90,8 +92,10 @@ public class EasyVerein {
 		String url = ConfigManager.getValue(ConfigKey.EASYVEREIN_SERVICEURL);
 		String auth = ConfigManager.getValue(ConfigKey.EASYVEREIN_APIKEY);
 		
+		
+		
 		WebClient client = WebClient
-				.create(url, Collections.singletonList(new JacksonJsonProvider()))
+				.create(url, Collections.singletonList(new JacksonJsonProvider()), Arrays.asList(new LoggingFeature()), null)
 				.header("Authorization", "Token " + auth)
 				.accept(MediaType.APPLICATION_JSON_TYPE);	
 		
