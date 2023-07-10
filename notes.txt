@@ -1,0 +1,6 @@
+https://www.cse.unsw.edu.au/~cs9322/labs/lab01/index.html
+https://www.baeldung.com/rest-with-spring-series
+https://www.baeldung.com/logback
+
+https://products.aspose.cloud/words/java/
+https://products.aspose.cloud/words/java/report/

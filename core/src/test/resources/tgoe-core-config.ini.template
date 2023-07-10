@@ -1,8 +1,0 @@
-;This file contains configuration for TGÖ services in INI format.
-;The file must be renamed to "tgoe-core-config.ini" and placed somewhere in the Java classpath.
-;
-;WARNING: This file contains sensitive data. Put it at a safe place and never commit real secrets to a VCS.
-
-[easyverein]
-apikey = ABCDEFGHIJKLMNOPQRSTUVWXYZ
-serviceurl = https://hexa.easyverein.com/api/v1.7/

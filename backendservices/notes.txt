@@ -1,3 +1,0 @@
-https://www.cse.unsw.edu.au/~cs9322/labs/lab01/index.html
-https://www.baeldung.com/rest-with-spring-series
-https://www.baeldung.com/logback
