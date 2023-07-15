@@ -21,7 +21,7 @@ public class Member {
 	private final SimpleDateFormat dateOnlyFormat = new SimpleDateFormat("yyyy-MM-dd");
 	private static final Logger logger = LoggerFactory.getLogger(Member.class);
 
-	private String id;
+	private long id;
 	private String membershipNumber;
 	private Date joinDate;
 	private Date resignationDate;
@@ -34,14 +34,14 @@ public class Member {
 	private String city;
 	private String zip;
 	private String privateEmail;
-	private List<GroupMembership> memberGroups;
+	private List<GroupMembership> groupMemberships;
 
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 
 	@JsonProperty("id")
-	private void setId(String id) {
+	private void setId(long id) {
 		this.id = id;
 	}
 
@@ -118,13 +118,13 @@ public class Member {
 		return privateEmail;
 	}
 
-	public List<GroupMembership> getMemberGroups() {
-		return memberGroups;
+	public List<GroupMembership> getGroupMemberships() {
+		return groupMemberships;
 	}
 
 	@JsonProperty("memberGroups")
-	private void setMemberGroups(List<GroupMembership> memberGroups) {
-		this.memberGroups = memberGroups;
+	private void setGroupMemberships(List<GroupMembership> groupMemberships) {
+		this.groupMemberships = groupMemberships;
 	}
 
 	@JsonProperty("contactDetails")
@@ -141,7 +141,7 @@ public class Member {
 			dateOfBirth = dob != null ? dateOnlyFormat.parse(dob) : null;
 		} catch (ParseException e) {
 			dateOfBirth = null;
-			logger.warn("Cannot parse date of Member. Value=" + dob);
+			logger.warn("Cannot parse date of Member. Value={}", dob);
 		}
 	}
 	

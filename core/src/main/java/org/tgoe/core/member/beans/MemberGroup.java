@@ -7,18 +7,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class MemberGroup {
 	public final static String easyvereinQueryString="{id,name,short,descriptionOnInvoice,orderSequence}";
 	
-	private String id;
+	private long id;
 	private String key;
 	private String name;
 	private String description;
 	private int orderSequence;
 	
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 	
 	@JsonProperty("id")
-	private void setId(String id) {
+	private void setId(long id) {
 		this.id = id;
 	}
 	

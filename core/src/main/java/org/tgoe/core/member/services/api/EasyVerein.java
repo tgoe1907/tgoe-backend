@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.ws.rs.ProcessingException;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -14,8 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tgoe.core.config.ConfigKey;
 import org.tgoe.core.config.ConfigManager;
+import org.tgoe.core.member.beans.Member;
 import org.tgoe.core.member.beans.MemberGroup;
-import org.tgoe.core.member.services.api.response.GetMemberGroupResponse;
+import org.tgoe.core.member.services.api.response.EasyvereinListResponse;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
@@ -35,6 +37,20 @@ public class EasyVerein {
 		return obj;
 	}
 	
+	private WebClient prepareWebClient() {
+		String url = ConfigManager.getValue(ConfigKey.EASYVEREIN_SERVICEURL);
+		String auth = ConfigManager.getValue(ConfigKey.EASYVEREIN_APIKEY);
+		
+		
+		
+		WebClient client = WebClient
+				.create(url, Collections.singletonList(new JacksonJsonProvider()), Arrays.asList(new LoggingFeature()), null)
+				.header("Authorization", "Token " + auth)
+				.accept(MediaType.APPLICATION_JSON_TYPE);	
+		
+		return client;
+	}	
+	
 	/**
 	 * Fetch all member groups.
 	 * 
@@ -45,7 +61,7 @@ public class EasyVerein {
 		List<MemberGroup> list = null;
 		int page = 0;
 		
-		GetMemberGroupResponse resObj;
+		EasyvereinListResponse<MemberGroup> resObj;
 		
 		do {
 			page++;
@@ -67,7 +83,7 @@ public class EasyVerein {
 			}
 	
 			try {
-				resObj = res.readEntity(GetMemberGroupResponse.class);
+				resObj = res.readEntity(new GenericType<EasyvereinListResponse<MemberGroup>>() {});
 			} catch (ProcessingException e) {
 				throw new EasyVereinException("getMemberGroups - cannot map response data structure", e);
 			}
@@ -88,18 +104,60 @@ public class EasyVerein {
 		
 		return list;
 	}
+
 	
-	private WebClient prepareWebClient() {
-		String url = ConfigManager.getValue(ConfigKey.EASYVEREIN_SERVICEURL);
-		String auth = ConfigManager.getValue(ConfigKey.EASYVEREIN_APIKEY);
+	/**
+	 * Fetch all members of a member group
+	 * 
+	 * @param groupId ID of member group.
+	 * @return List of members.
+	 * @throws EasyVereinException 
+	 */
+	public List<Member> findMembersOfGroup(long groupId) throws EasyVereinException {
+		List<Member> list = null;
+		int page = 0;
 		
+		EasyvereinListResponse<Member> resObj;
 		
+		do {
+			page++;
+			
+			logger.debug("getMemberGroups - reading page {}", page);
+			
+			WebClient client = prepareWebClient();
+			Response res = client
+					.path("member")
+					.query("limit", PAGE_SIZE)
+					.query("query", Member.easyvereinQueryString)
+					.query("memberGroups", groupId)
+					.query("page", page)
+					.get();
+			
+			
+			if( res.getStatus() != 200) {
+				throw new EasyVereinException("findMembersOfGroup - service returned unexpected status - " + res.getStatus());
+			}
+	
+			try {
+				resObj = res.readEntity(new GenericType<EasyvereinListResponse<Member>>() {});
+			} catch (ProcessingException e) {
+				throw new EasyVereinException("findMembersOfGroup - cannot map response data structure", e);
+			}
+			
+			//add result records 
+			if( list == null ) {
+				list = resObj.results();
+			} else {
+				list.addAll(resObj.results());
+			}
+		}
+		while(resObj.next() != null && page < MAX_PAGE_QUERIES);
 		
-		WebClient client = WebClient
-				.create(url, Collections.singletonList(new JacksonJsonProvider()), Arrays.asList(new LoggingFeature()), null)
-				.header("Authorization", "Token " + auth)
-				.accept(MediaType.APPLICATION_JSON_TYPE);	
+		//log warning in case we did not query all pages
+		if( resObj.next() != null ) {
+			logger.warn("getMemberGroups - reached max pages, not all records will be returned");
+		}
 		
-		return client;
+		return list;
 	}
 }
