@@ -13,7 +13,7 @@ public class EasyVereinTest {
 	@Test
 	void testGetMemberGroups() throws EasyVereinException {
 		List<MemberGroup> memberGroups = EasyVerein.getInstance().getMemberGroups();
-		
+
 		for( MemberGroup m : memberGroups ) {
 			logger.info(m.toString());
 		}

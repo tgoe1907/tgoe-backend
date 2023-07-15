@@ -56,7 +56,8 @@ public class EasyVerein {
 			Response res = client
 					.path("member-group")
 					.query("limit", PAGE_SIZE)
-					.query("query", "{id,name,short}")
+					.query("query", MemberGroup.easyvereinQueryString)
+					.query("ordering", "orderSequence")
 					.query("page", page)
 					.get();
 			
