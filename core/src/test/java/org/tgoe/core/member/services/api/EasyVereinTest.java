@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.tgoe.core.member.beans.GroupMembership;
 import org.tgoe.core.member.beans.Member;
 import org.tgoe.core.member.beans.MemberGroup;
+import org.tgoe.core.member.enums.MemberGroupCustomProperty;
+import org.tgoe.core.member.validation.impl.SportsClassGroupCustomProperties;
 
 public class EasyVereinTest {
 	private static final Logger logger = LoggerFactory.getLogger(EasyVereinTest.class);
@@ -23,6 +25,31 @@ public class EasyVereinTest {
 		}
 		
 		assert(memberGroups.size() > 30);		
+	}
+	
+	@Test
+	void testMemberGroupCustomProperties() throws EasyVereinException {
+		int found = 0;
+		List<MemberGroup> memberGroups = EasyVerein.getInstance().getMemberGroups();
+
+		for( MemberGroup m : memberGroups ) {
+			logger.info(m.toString());
+			
+			for( MemberGroupCustomProperty p : MemberGroupCustomProperty.values() ) {
+				String v =  m.getCustomProperty(p);
+				if( v == null ) {
+					v = "<does not exist>";
+				}
+				else if( v.length() == 0 ) {
+					v = "<exists and has no value>";
+				} else {
+					found++;
+				}
+				logger.info(" --> {} '{}' = {} ", p.toString(), p.getKey(), v );
+			}
+		}
+		
+		assert(found > 20);		
 	}
 	
 	
@@ -43,6 +70,16 @@ public class EasyVereinTest {
 			
 			assertNotNull(test);
 		}		
+	}
+	
+	@Test
+	void testValidationSportsClassGroupCustomProperties() throws EasyVereinException {
+		List<MemberGroup> memberGroups = EasyVerein.getInstance().getMemberGroups();
+		SportsClassGroupCustomProperties v = new SportsClassGroupCustomProperties();
+		v.test(memberGroups);
 		
+		for( Object m : v.getMessages()) {
+			logger.info(m.toString());
+		}
 	}
 }
