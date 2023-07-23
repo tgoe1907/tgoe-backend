@@ -24,7 +24,7 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 public class EasyVerein {
 	private static final EasyVerein obj = new EasyVerein();
-	private static final int MAX_PAGE_QUERIES = 10;
+	private static final int MAX_PAGE_QUERIES = 20;
 	private static final int PAGE_SIZE = 100;
 	
 	private static final Logger logger = LoggerFactory.getLogger(EasyVerein.class);
@@ -57,6 +57,7 @@ public class EasyVerein {
 	 * @return List of member groups
 	 * @throws EasyVereinException
 	 */
+	//TODO Avoid duplicated code by build a generic method to query members (or even generic for multiple types)
 	public List<MemberGroup> getMemberGroups() throws EasyVereinException {
 		List<MemberGroup> list = null;
 		int page = 0;
@@ -160,4 +161,57 @@ public class EasyVerein {
 		
 		return list;
 	}
+	
+	/**
+	 * Fetch all members.
+	 * 
+	 * @return List of members.
+	 * @throws EasyVereinException 
+	 */
+	public List<Member> getAllMembers() throws EasyVereinException {
+		List<Member> list = null;
+		int page = 0;
+		
+		EasyvereinListResponse<Member> resObj;
+		
+		do {
+			page++;
+			
+			logger.debug("getMemberGroups - reading page {}", page);
+			
+			WebClient client = prepareWebClient();
+			Response res = client
+					.path("member")
+					.query("limit", PAGE_SIZE)
+					.query("query", Member.easyvereinQueryString)
+					.query("page", page)
+					.get();
+			
+			
+			if( res.getStatus() != 200) {
+				throw new EasyVereinException("getAllMembers - service returned unexpected status - " + res.getStatus());
+			}
+	
+			try {
+				resObj = res.readEntity(new GenericType<EasyvereinListResponse<Member>>() {});
+			} catch (ProcessingException e) {
+				throw new EasyVereinException("getAllMembers - cannot map response data structure", e);
+			}
+			
+			//add result records 
+			if( list == null ) {
+				list = resObj.results();
+			} else {
+				list.addAll(resObj.results());
+			}
+		}
+		while(resObj.next() != null && page < MAX_PAGE_QUERIES);
+		
+		//log warning in case we did not query all pages
+		if( resObj.next() != null ) {
+			logger.warn("getAllMembers - reached max pages, not all records will be returned");
+		}
+		
+		return list;
+	}	
 }

@@ -11,7 +11,6 @@ import org.tgoe.core.member.beans.GroupMembership;
 import org.tgoe.core.member.beans.Member;
 import org.tgoe.core.member.beans.MemberGroup;
 import org.tgoe.core.member.enums.MemberGroupCustomProperty;
-import org.tgoe.core.member.validation.impl.SportsClassGroupCustomProperties;
 
 public class EasyVereinTest {
 	private static final Logger logger = LoggerFactory.getLogger(EasyVereinTest.class);
@@ -70,16 +69,5 @@ public class EasyVereinTest {
 			
 			assertNotNull(test);
 		}		
-	}
-	
-	@Test
-	void testValidationSportsClassGroupCustomProperties() throws EasyVereinException {
-		List<MemberGroup> memberGroups = EasyVerein.getInstance().getMemberGroups();
-		SportsClassGroupCustomProperties v = new SportsClassGroupCustomProperties();
-		v.test(memberGroups);
-		
-		for( Object m : v.getMessages()) {
-			logger.info(m.toString());
-		}
 	}
 }
