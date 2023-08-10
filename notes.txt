@@ -4,3 +4,28 @@ https://www.baeldung.com/logback
 
 https://products.aspose.cloud/words/java/
 https://products.aspose.cloud/words/java/report/
+
+https://www.w3schools.blog/maven-spring-project-eclipse-example
+https://www.baeldung.com/apache-cxf-with-spring
+
+
+	<repositories>
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+	<dependencies>
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>11.0.0</version>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
+	
+	
+https://www.tahasivaci.com/jsf/creating-jsf-application-by-using-eclipse-maven-and-tomcat
+https://stackoverflow.com/questions/65703840/how-to-properly-configure-jakarta-ee-libraries-in-maven-pom-xml-for-tomcat/65704617#65704617

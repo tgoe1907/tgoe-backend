@@ -1,7 +1,7 @@
 package org.tgoe.core.member.enums;
 
 public enum MemberGroupCustomProperty {
-	TRAINER("Trainer"), WEEKDAY("Tag"), TIME("Zeit"), LOCATION("Ort");
+	TRAINER("Trainer"), WEEKDAY("Tag"), TIME("Zeit"), LOCATION("Ort"), DOSB_SPORT("DOSB-Sportart");
 
 	private String key;
 

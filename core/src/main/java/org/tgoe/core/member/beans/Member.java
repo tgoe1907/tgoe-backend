@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tgoe.core.member.enums.DosbSport;
 import org.tgoe.core.member.enums.MemberDosbGender;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -39,6 +40,7 @@ public class Member {
 	private String zip;
 	private String privateEmail;
 	private MemberDosbGender dosbGender;
+	private List<DosbSport> dosbSport;
 	private List<GroupMembership> groupMemberships;
 
 	public long getId() {
@@ -107,6 +109,18 @@ public class Member {
 		return familyName;
 	}
 
+	/**
+	 * Combine first name and family name delimited by space. Returns empty string
+	 * in case both name parts are empty. Never returns null.
+	 * 
+	 * @return
+	 */
+	public String getFullname() {
+		String a = firstName == null ? "" : firstName;
+		String b = familyName == null ? "" : familyName;
+		return a + (a.length() > 0 ? " " : "") + b;
+	}
+
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
@@ -129,12 +143,13 @@ public class Member {
 
 	/**
 	 * Return list of group memberships. Is never null, but can be empty list.
+	 * 
 	 * @return
 	 */
 	public List<GroupMembership> getGroupMemberships() {
 		return groupMemberships;
 	}
-	
+
 	@JsonProperty("integrationDosbGender")
 	private void setDosbGender(String key) {
 		dosbGender = MemberDosbGender.findByKey(key);
@@ -142,6 +157,31 @@ public class Member {
 
 	public MemberDosbGender getDosbGender() {
 		return dosbGender;
+	}
+
+	/**
+	 * Return DOSB sports as enumeration. In case there are sports which are not
+	 * implemented in the enumeration, UNKNOWN value will be returned instead.
+	 * 
+	 * @return
+	 */
+	public List<DosbSport> getDosbSport() {
+		return dosbSport;
+	}
+
+	@JsonProperty("integrationDosbSport")
+	private void setDosbSport(String[] dosbSport) {
+		this.dosbSport = new ArrayList<DosbSport>();
+
+		for (String s : dosbSport) {
+			//only use 3 digit key to find it.
+			if (s.length() > 3) {
+				s.substring(0, 3);
+			}
+			
+			DosbSport e = DosbSport.findByKey(s);
+			this.dosbSport.add(e == null ? DosbSport.UNKNOWN : e);
+		}
 	}
 
 	@JsonProperty("memberGroups")
@@ -167,11 +207,10 @@ public class Member {
 			logger.warn("Cannot parse date of Member. Value={}", dob);
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		return String.format("Member[id=%s, membershipNumber=%s firstName=%s, familyName=%s]", id, membershipNumber,
 				firstName, familyName);
 	}
-
 }

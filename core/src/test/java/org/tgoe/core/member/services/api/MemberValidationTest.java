@@ -7,9 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tgoe.core.member.beans.Member;
-import org.tgoe.core.member.validation.impl.MemberSalutation;
-import org.tgoe.core.member.validation.impl.MembershipFeeAssignment;
-import org.tgoe.core.member.validation.impl.MembershipNumber;
+import org.tgoe.core.member.validation.impl.*;
 
 public class MemberValidationTest {
 	private static final Logger logger = LoggerFactory.getLogger(MemberValidationTest.class);
@@ -43,6 +41,36 @@ public class MemberValidationTest {
 	@Test
 	void testMembershipFeeAssignment() {
 		MembershipFeeAssignment v = new MembershipFeeAssignment();
+		v.test(members);
+		
+		for( Object m : v.getMessages()) {
+			logger.info(m.toString());
+		}		
+	}
+	
+	@Test
+	void testMembershipNumberUnique() {
+		MembershipNumberUnique v = new MembershipNumberUnique();
+		v.test(members);
+		
+		for( Object m : v.getMessages()) {
+			logger.info(m.toString());
+		}		
+	}
+	
+	@Test
+	void testMemberBasic() {
+		MemberBasic v = new MemberBasic();
+		v.test(members);
+		
+		for( Object m : v.getMessages()) {
+			logger.info(m.toString());
+		}		
+	}	
+	
+	@Test
+	void testMemberDosbSport() {
+		MemberDosbSport v = new MemberDosbSport();
 		v.test(members);
 		
 		for( Object m : v.getMessages()) {

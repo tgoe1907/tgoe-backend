@@ -3,6 +3,7 @@ package org.tgoe.core.member.beans;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.tgoe.core.member.enums.DosbSport;
 import org.tgoe.core.member.enums.MemberGroupCustomProperty;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -100,6 +101,24 @@ public class MemberGroup {
 		}
 		
 		return customPropertyCache.get(p);
+	}
+	
+	/**
+	 * Returns DOSB sport custom property converted to enumeration.
+	 * Returns null in case no value provided or shorter than 3 chars.
+	 * Returns UNKNOWN value in case key not implemented in enumeration.
+	 * String value must start by 3 character key in order to find enumeration value.
+	 * @return
+	 */
+	public DosbSport getDosbSportCustomProperty() {
+		String s = getCustomProperty(MemberGroupCustomProperty.DOSB_SPORT);
+		if( s == null ) return null;
+		
+		s = s.trim();
+		if( s.length() < 3 ) return null;
+		
+		DosbSport e = DosbSport.findByKey(s.substring(0,3));
+		return e == null ? DosbSport.UNKNOWN : e;
 	}
 	
 	/**

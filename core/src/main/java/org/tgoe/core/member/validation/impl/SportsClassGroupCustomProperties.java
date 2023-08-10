@@ -4,13 +4,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.tgoe.core.member.beans.MemberGroup;
-import org.tgoe.core.member.validation.MemberGroupValidator;
-import org.tgoe.core.member.validation.ValidationMessage;
-import org.tgoe.core.member.validation.ValidationSeverity;
-import org.tgoe.core.member.validation.Validator;
+import org.tgoe.core.member.enums.DosbSport;
 import org.tgoe.core.member.enums.MemberGroupCustomProperty;
+import org.tgoe.core.member.validation.MemberGroupValidator;
+import org.tgoe.core.member.validation.ValidationSeverity;
 
-public class SportsClassGroupCustomProperties extends MemberGroupValidator  {
+public class SportsClassGroupCustomProperties extends MemberGroupValidator {
 	private static final List<MemberGroupCustomProperty> mandatoryProperties = Arrays.asList(
 			MemberGroupCustomProperty.TRAINER, MemberGroupCustomProperty.WEEKDAY, MemberGroupCustomProperty.TIME,
 			MemberGroupCustomProperty.LOCATION);
@@ -29,6 +28,16 @@ public class SportsClassGroupCustomProperties extends MemberGroupValidator  {
 				addMessage(group, ValidationSeverity.WARNING, p.getKey() + " existiert, jedoch ohne Wert");
 			}
 		}
+
+		// check for valid value of DOSB sport property
+		if (group.getDosbSportCustomProperty() == null) {
+			addMessage(group, ValidationSeverity.ERROR,
+					MemberGroupCustomProperty.DOSB_SPORT.getKey() + " existiert nicht");
+		} else if (DosbSport.UNKNOWN.equals(group.getDosbSportCustomProperty())) {
+			addMessage(group, ValidationSeverity.ERROR,
+					MemberGroupCustomProperty.DOSB_SPORT.getKey() + " existiert, jedoch mit ungültigem Wert");
+		}
+
 	}
 
 	public void test(List<MemberGroup> groups) {
