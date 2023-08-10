@@ -1,2 +1,3 @@
-**/target/
-**/tgoe-core-config.ini
+vendor
+/composer.phar
+/tgoe-config.ini

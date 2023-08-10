@@ -1,0 +1,11 @@
+{
+	 "require": {
+		 "guzzlehttp/guzzle": "7.7.*"
+	},
+	
+	"autoload" : {
+		"psr-4" : {
+			"TgoeSrv\\" : "src/TgoeSrv"
+		}
+	}
+}
