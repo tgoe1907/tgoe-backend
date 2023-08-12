@@ -41,7 +41,7 @@ class MemberGroup implements \Stringable
 
     public function __toString(): string
     {
-        return "MemberGroup[id={$this->id}, key={$this->key}, name={$this->name}]";
+        return "MemberGroup[id=\"{$this->id}\", key=\"{$this->key}\", name=\"{$this->name}\"]";
     }
 
     public function getId(): int

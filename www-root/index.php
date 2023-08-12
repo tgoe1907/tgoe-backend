@@ -8,6 +8,8 @@ use TgoeSrv\Member\Api\Easyverein;
 use TgoeSrv\Member\Enums\MemberGroupCustomProperty;
 use TgoeSrv\Member\Api\MemberGroupService;
 use TgoeSrv\Member\Api\MemberService;
+use TgoeSrv\Member\Validator\Impl\MemberBasicValidator;
+use TgoeSrv\Member\Validator\Impl\MemberSalutationValidator;
 
 /*
 $e = new MemberGroupService();
@@ -25,13 +27,33 @@ foreach( $res as $o ) {
 }
 */
 
+
 $e = new MemberService();
-$res = $e->getAllMembers();
+$members = $e->getAllMembers();
+
+/*
+foreach( $members as $o ) {
+    echo $o."\r\n";
+}
+*/
+
+
+$v = new MemberBasicValidator();
+$v->testMemberList($members);
+$res = $v->getMessages();
+
 foreach( $res as $o ) {
     echo $o."\r\n";
 }
 
-var_dump($res);
+
+$v = new MemberSalutationValidator();
+$v->testMemberList($members);
+$res = $v->getMessages();
+
+foreach( $res as $o ) {
+    echo $o."\r\n";
+}
 
 
 ?>

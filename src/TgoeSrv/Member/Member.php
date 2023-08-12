@@ -16,9 +16,9 @@ class Member implements \Stringable
 
     private string $membershipNumber = '';
 
-    private int $joinDate = 0;
+    private int $joinDate = PHP_INT_MIN;
 
-    private int $resignationDate = 0;
+    private int $resignationDate = PHP_INT_MIN;
 
     private String $loginName = '';
 
@@ -30,7 +30,7 @@ class Member implements \Stringable
 
     private string $familyName = '';
 
-    private int $dateOfBirth = 0;
+    private int $dateOfBirth = PHP_INT_MIN;
 
     private string $street = '';
 
@@ -94,7 +94,7 @@ class Member implements \Stringable
 
     public function __toString(): string
     {
-        return "Member[id={$this->id}, membershipNumber={$this->membershipNumber} firstName={$this->firstName}, familyName={$this->familyName}]";
+        return "Member[id=\"{$this->id}\", membershipNumber=\"{$this->membershipNumber}\", firstName=\"{$this->firstName}\", familyName=\"{$this->familyName}\"]";
     }
 
     /**
