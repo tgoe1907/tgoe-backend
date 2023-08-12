@@ -10,6 +10,7 @@ use TgoeSrv\Member\Api\MemberGroupService;
 use TgoeSrv\Member\Api\MemberService;
 use TgoeSrv\Member\Validator\Impl\MemberBasicValidator;
 use TgoeSrv\Member\Validator\Impl\MemberSalutationValidator;
+use TgoeSrv\Member\Validator\Impl\MembershipFeeValidator;
 
 /*
 $e = new MemberGroupService();
@@ -55,5 +56,11 @@ foreach( $res as $o ) {
     echo $o."\r\n";
 }
 
+$v = new MembershipFeeValidator();
+$v->testMemberList($members);
+$res = $v->getMessages();
 
+foreach( $res as $o ) {
+    echo $o."\r\n";
+}
 ?>

@@ -16,9 +16,9 @@ class Member implements \Stringable
 
     private string $membershipNumber = '';
 
-    private int $joinDate = PHP_INT_MIN;
+    private ?int $joinDate = null;
 
-    private int $resignationDate = PHP_INT_MIN;
+    private ?int $resignationDate = null;
 
     private String $loginName = '';
 
@@ -30,7 +30,7 @@ class Member implements \Stringable
 
     private string $familyName = '';
 
-    private int $dateOfBirth = PHP_INT_MIN;
+    private ?int $dateOfBirth = null;
 
     private string $street = '';
 
