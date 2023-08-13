@@ -1,12 +1,16 @@
 ;This file contains configuration for TGÖ services in INI format.
 ;The file must be named "tgoe-core-config.ini" and placed somewhere in the Java classpath.
 ;
-;WARNING: This file contains sensitive data. Put it at a safe place and never commit real secrets to a VCS.
+;WARNING: 
+;  This file contains sensitive data (except template version of the file).
+;  Put it at a safe place and never commit real secrets to a VCS.
 
 [easyverein]
 ;This section contains configuration values related to club management application EasyVerein (http://www.easyverein.com)
 apikey = ABCDEFGHIJKLMNOPQRSTUVWXYZ
 serviceurl = https://hexa.easyverein.com/api/v1.7/
+customfield_loginname = Anmeldename
+customfield_passwordhash = Passwort Hash
 
 [aspose]
 ;This section contains configuration for usage of document processing services at https://www.aspose.cloud/

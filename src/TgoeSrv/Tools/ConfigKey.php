@@ -7,6 +7,8 @@ enum ConfigKey : string
 {
     case EASYVEREIN_APIKEY = 'easyverein|apikey';
     case EASYVEREIN_SERVICEURL = 'easyverein|serviceurl';
+    case EASYVEREIN_CUSTOMFIELD_LOGINNAME = 'easyverein|customfield_loginname';
+    case EASYVEREIN_CUSTOMFIELD_PASSWORDHASH = 'easyverein|customfield_passwordhash';
     
     public function getSection() : string 
     {

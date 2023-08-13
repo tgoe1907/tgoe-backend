@@ -11,6 +11,7 @@
 # Setup Production Environment
 ### Setup web server
 * Setup webserver to work with PHP 8.
+** Use HTTPS only for public access to protect passwords and sensitive member information.
 ** Do not use built-in web-server of PHP. It's only intended for development environments. Use something like Apache httpd or NGINX.
 ** Set web root directory to "www-root" of the project. For security reasons, internet users must not be able to access any content outside this directory.
 ** Modules needed: [TODO]
