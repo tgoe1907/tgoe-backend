@@ -76,7 +76,7 @@ class MemberGroup implements \Stringable
      * @param MemberGroupCustomProperty $p
      * @return string Value of custom property. Empty string in case it exists but has no value. NULL in case it does not exist.
      */
-    public function getCustomProperty(MemberGroupCustomProperty $memberGroupCustomProperty): string
+    public function getCustomProperty(MemberGroupCustomProperty $memberGroupCustomProperty): ?string
     {
         if (! isset($this->customPropertyCache)) {
             // parse description and initialize customPropertyCache
@@ -92,7 +92,7 @@ class MemberGroup implements \Stringable
             }
         }
 
-        return isset($this->customPropertyCache[$memberGroupCustomProperty->value]) ? $this->customPropertyCache[$memberGroupCustomProperty->value] : '';
+        return isset($this->customPropertyCache[$memberGroupCustomProperty->value]) ? $this->customPropertyCache[$memberGroupCustomProperty->value] : null;
     }
 
     /**

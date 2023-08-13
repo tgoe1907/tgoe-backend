@@ -11,7 +11,7 @@ use TgoeSrv\Member\Enums\DosbSport;
 class MemberSalutationValidator extends SingleMemberValidator
 {
 
-    private $validSalutations = [
+    private static $validSalutations = [
         'Frau' => MemberDosbGender::FEMALE,
         'Herr' => MemberDosbGender::MALE
     ];
@@ -29,7 +29,7 @@ class MemberSalutationValidator extends SingleMemberValidator
         if (empty($member->getSalutation())) {
             $hasError = true;
             $this->addMessage(ValidationSeverity::ERROR, $member, "Anrede darf nicht leer sein.");
-        } else if (! isset($this->validSalutations[$member->getSalutation()])) {
+        } else if (! isset(self::$validSalutations[$member->getSalutation()])) {
             $hasError = true;
             $this->addMessage(ValidationSeverity::ERROR, $member, "Anrese muss einer der Werte sein: " . implode(', ', array_keys($this->validSalutations)));
         }
@@ -41,7 +41,7 @@ class MemberSalutationValidator extends SingleMemberValidator
         }
 
         // in case no privous error, check consistency of salutation and gender
-        if (! $hasError && $this->validSalutations[$member->getSalutation()] != $member->getDosbGender()) {
+        if (! $hasError && self::$validSalutations[$member->getSalutation()] != $member->getDosbGender()) {
             $this->addMessage(ValidationSeverity::ERROR, $member, "DOSB Geschlecht passt nicht zur Anrede.");
         }
     }

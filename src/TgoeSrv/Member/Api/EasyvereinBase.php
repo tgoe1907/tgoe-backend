@@ -10,7 +10,7 @@ use TgoeSrv\Tools\Logger;
 abstract class EasyvereinBase
 {
 
-    private const MAX_PAGE_QUERIES = 1; //20
+    private const MAX_PAGE_QUERIES = 25;
 
     private const PAGE_SIZE = 100;
 

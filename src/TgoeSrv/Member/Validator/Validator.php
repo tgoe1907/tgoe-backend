@@ -11,11 +11,13 @@ abstract class Validator
 
     protected abstract function getValidatorName(): string;
 
-    protected function addMessage(ValidationSeverity $severity, object $targetObject, string $message) : void {
-        $this->validatorMessages[] = new ValidationMessage($severity, $targetObject, $message);
+    protected function addMessage(ValidationSeverity $severity, object $targetObject, string $message): void
+    {
+        $this->validatorMessages[] = new ValidationMessage($severity, $this->getValidatorName(), $targetObject, $message);
     }
-    
-    public function getMessages() : array {
+
+    public function getMessages(): array
+    {
         return $this->validatorMessages;
     }
 }

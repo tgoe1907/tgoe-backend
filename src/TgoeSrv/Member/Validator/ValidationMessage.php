@@ -12,8 +12,10 @@ class ValidationMessage implements \Stringable
     private object $targetObject;
 
     private string $message;
+    private string $validatorName;
     
-    public function __construct(ValidationSeverity $severity, object $targetObject, string $message) {
+    public function __construct(ValidationSeverity $severity, string $validatorName, object $targetObject, string $message) {
+        $this->validatorName = $validatorName;
         $this->severity = $severity;
         $this->targetObject = $targetObject;
         $this->message = $message;
@@ -22,7 +24,7 @@ class ValidationMessage implements \Stringable
 
     public function __toString(): string
     {
-        return "ValidationMessage[severity=\"{$this->severity->name}\", message=\"{$this->message}\", targetObject=\"{$this->targetObject}\"";
+        return "ValidationMessage[severity=\"{$this->severity->name}\", validatorName=\"{$this->validatorName}\", message=\"{$this->message}\", targetObject=\"{$this->targetObject}\"";
     }
 }
 ?>

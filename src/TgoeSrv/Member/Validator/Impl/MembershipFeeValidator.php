@@ -10,11 +10,11 @@ use TgoeSrv\Member\Enums\ValidationSeverity;
 class MembershipFeeValidator extends SingleMemberValidator
 {
 
-    private array $deprecated = [
+    private static array $deprecated = [
         'B-GF'
     ];
 
-    private array $valid = [
+    private static array $valid = [
         'B-FA',
         'B-GB',
         'B-EM',
@@ -50,7 +50,7 @@ class MembershipFeeValidator extends SingleMemberValidator
         }
         
         // check member has no deprecated groups
-        $dep = array_intersect($memberGroupKeys, $this->deprecated);
+        $dep = array_intersect($memberGroupKeys, self::$deprecated);
         if( count($dep) > 0) {
             $this->addMessage(ValidationSeverity::WARNING, $member, "Mitglied hat veraltete Gruppen: ".implode(', ', $dep));
         }
@@ -62,7 +62,7 @@ class MembershipFeeValidator extends SingleMemberValidator
         }
         
         // check member has exactly one member fee group
-        $dep = array_intersect($memberGroupKeys, $this->valid);
+        $dep = array_intersect($memberGroupKeys, self::$valid);
         if( count($dep) == 0) {
             $this->addMessage(ValidationSeverity::ERROR, $member, "Mitglied hat keine Grundbeitrags-Gruppe." );
         }
