@@ -5,7 +5,7 @@
 	},
 	"autoload" : {
 		"psr-4" : {
-			"TgoeSrv\\" : "src/TgoeSrv"
+			"TgoeSrv\\" : "custom-lib/TgoeSrv"
 		}
 	}
 }
