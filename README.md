@@ -1,20 +1,31 @@
 # Introduction
-### That's this project?
-* [TODO]
+### About this project?
+The TGÖ Services project contains a collection of tools and libraries tailor made for "Turngemeinde Germania Ötigheim e.V." sports club. It extends the commercial management solution "EasyVerein" by some nice features we were missing.
+It's not designed to fit any club's needs, however if you think it's useful, feel free to use the whole application or just pieces of code.
 
 ### Why PHP?
-* PHP may not be the most fancy coding language these days. However, there are a lot of advantages...
-* It's available at virtually all hosting providers on the market.
+PHP may not be the most fancy coding language these days. However, there are a lot of advantages...
+* It's available at virtually all hosting providers on the market. This makes hosting the application cheap and easy.
 * It's easy to setup on local environment for many OS and system architectures. Even with small resources like single board computers.
 * Operation and maintenance has a steep learning curve. Due to a huge community, knowledge can be researched on loads of internet sources.
 
+### Used Frameworks
+This application is based on some frameworks to reduce individual code and get a solid foundation in terms of structure, best practices and security.
+* Composer - used for managing 3rd party libraries
+* Ghuzzle Http - Used for API calls.
+* CodeIgniter - MVC framework and foundation of the app.
+
+### Used 3rd party services
+* Easy Verein - Management solution for clubs and important source of data for this tool.
+* Aspose.Cloud - Tools for handling MS Office and PDF documents. It's commercial, but it has a nice free usage tier.
+
 # Setup Production Environment
 ### Setup web server
-* Setup webserver to work with PHP 8.
+* Setup webserver to work with PHP 8.2
 ** Use HTTPS only for public access to protect passwords and sensitive member information.
 ** Do not use built-in web-server of PHP. It's only intended for development environments. Use something like Apache httpd or NGINX.
-** Set web root directory to "www-root" of the project. For security reasons, internet users must not be able to access any content outside this directory.
-** Modules needed: [TODO]
+** Set web root directory to "public" of the project. For security reasons, internet users must not be able to access any content outside this directory.
+** Modules needed: curl, openssl, intl, mbstring
 ** Recommended settings:
 *** Some background jobs (e.g. validations or big lists) need a lot of time to query APIs. This usually exceeds PHP's default for maximum execution time. It's highly recommended to set it to a bigger value e.g. 300 (seconds).
 * Checkout/export project from Git repository
@@ -31,8 +42,9 @@
 * For easy usage, add PHP installation directory to OS's path.
 * Composer
 	* Install composer.phar to project directory or other position in PHP's include path.
-	* Run 'php composer.phar update' (or composer-update.bat) to download dependencies to verndor directory.
+	* Run 'php composer.phar update' (or 'composer-update.bat') to download dependencies to verndor directory.
 * Create 'tgoe-config.ini' file and provide all needed values. You can use 'tgoe-config.ini-template' as a template.
+* Run 'php spark serve' (or 'run-php-dev-server.bat') to start PHP's built in development web server with CodeIgniter's Spark extension. 
 
 ### Setup IDE
 * For easy and platform independent setup, try Eclipse PDT.
@@ -51,6 +63,7 @@
 
 # Roadmap
 ### Planned features
+* Consolidate idea of app configuration with CodeIgnitor. Goal is having a central place for all coniguration and no environment related configuration is contained in checked-in code.
 * Extended validation for member data (as Easyverein only provides very basic validation)
 ** DOSB sports category assignment (migration from existing Java implementation)
 *** make sure it's set

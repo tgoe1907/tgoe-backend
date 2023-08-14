@@ -15,4 +15,3 @@ abstract class SingleMemberValidator extends MemberListValidator
             $this->testMember($member);
     }
 }
-?>

@@ -7,4 +7,3 @@ abstract class MemberListValidator extends Validator
     public abstract function testMemberList( array $members ) : void;
 }
 
-?>

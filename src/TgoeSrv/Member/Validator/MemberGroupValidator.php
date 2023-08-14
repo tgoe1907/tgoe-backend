@@ -15,4 +15,3 @@ abstract class MemberGroupValidator extends Validator
             $this->testMemberGroup($memberGroup);
     }
 }
-?>

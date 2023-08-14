@@ -1,3 +1,4 @@
-vendor
+/vendor/
 /composer.phar
 /tgoe-config.ini
+/writable/

@@ -22,4 +22,4 @@ enum ConfigKey : string
         return $a[1];
     }
 }
-?>
+

@@ -27,4 +27,3 @@ class ValidationMessage implements \Stringable
         return "ValidationMessage[severity=\"{$this->severity->name}\", validatorName=\"{$this->validatorName}\", message=\"{$this->message}\", targetObject=\"{$this->targetObject}\"";
     }
 }
-?>

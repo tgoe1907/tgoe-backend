@@ -21,4 +21,3 @@ abstract class Validator
         return $this->validatorMessages;
     }
 }
-?>

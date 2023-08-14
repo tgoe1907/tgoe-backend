@@ -1,8 +1,8 @@
 {
-	 "require": {
-		 "guzzlehttp/guzzle": "7.7.*"
+	"require" : {
+		"guzzlehttp/guzzle" : "7.7.*",
+		"codeigniter4/framework" : "^4.3"
 	},
-	
 	"autoload" : {
 		"psr-4" : {
 			"TgoeSrv\\" : "src/TgoeSrv"
