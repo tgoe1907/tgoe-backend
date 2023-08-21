@@ -9,6 +9,13 @@ use TgoeSrv\Tools\Logger;
 class UserLoginHelper extends EasyvereinBase
 {
 
+    /**
+     * Tr to get user info by provided credentials. Return null in case login not matching.
+     * 
+     * @param string $username
+     * @param string $password
+     * @return MemberUserInformation|NULL
+     */
     public function verifyUserLogin(string $username, string $password): ?MemberUserInformation
     {
         $queryParams = [

@@ -92,6 +92,18 @@ class MemberUserInformation implements \Stringable
     }
     
     /**
+     * Combine first name and family name delimited by space.
+     * Returns empty string
+     * in case both name parts are empty. Never returns null.
+     *
+     * @return string
+     */
+    public function getFullName(): string
+    {
+        return $this->firstName . (! empty($this->firstName) ? ' ' : '') . $this->familyName;
+    }
+    
+    /**
      * For security reasons it can be useful to clear senstitige information.
      * E.g. when this object is stored in the session (which could be compromised).
      */

@@ -259,7 +259,7 @@ class Member implements \Stringable
      */
     public function getFullName(): string
     {
-        return $this->firstName + (! empty($this->firstName) ? ' ' : '') + $this->familyName;
+        return $this->firstName . (! empty($this->firstName) ? ' ' : '') . $this->familyName;
     }
 }
 
