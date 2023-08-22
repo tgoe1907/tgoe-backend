@@ -37,10 +37,9 @@ class MemberService extends EasyvereinBase
     /**
      * Fetch all members.
      *
-     * @param ?int $maxPages Limit number of pages queried from API. (Usually used to speed up tests.)
      * @return array List of members.
      */
-    public function getAllMembers( ?int $maxPages = null): array
+    public function getAllMembers(): array
     {
         $queryParams = [
             'query' => Member::easyvereinQueryString,
