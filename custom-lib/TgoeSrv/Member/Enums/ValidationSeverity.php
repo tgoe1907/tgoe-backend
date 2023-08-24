@@ -6,6 +6,16 @@ enum ValidationSeverity
 {
     case ERROR;
     case WARNING;
-    CASE INFO;
+    case INFO;
+    
+    public function getDisplayName() : string {
+        switch ($this) {
+            case self::ERROR: return 'Fehler';
+            case self::WARNING: return 'Warnung';
+            case self::INFO: return 'Hinweis';
+        }
+        
+        return '';
+    }
 }
 

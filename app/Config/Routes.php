@@ -36,6 +36,8 @@ $routes->get('/login/logout', 'Login::logout');
 $routes->get('/admin/', 'Admin\Home::index');
 $routes->get('/admin/member-data-confirmation', 'Admin\MemberDataConfirmation::index');
 $routes->get('/admin/member-data-confirmation/refresh', 'Admin\MemberDataConfirmation::refreshCache');
+$routes->get('/admin/data-quality-check', 'Admin\DataQualityCheck::index');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

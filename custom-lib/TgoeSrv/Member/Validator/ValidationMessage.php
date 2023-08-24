@@ -14,6 +14,38 @@ class ValidationMessage implements \Stringable
     private string $message;
     private string $validatorName;
     
+    /**
+     * @return \TgoeSrv\Member\Enums\ValidationSeverity
+     */
+    public function getSeverity()
+    {
+        return $this->severity;
+    }
+
+    /**
+     * @return object
+     */
+    public function getTargetObject()
+    {
+        return $this->targetObject;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
+     * @return string
+     */
+    public function getValidatorName()
+    {
+        return $this->validatorName;
+    }
+
     public function __construct(ValidationSeverity $severity, string $validatorName, object $targetObject, string $message) {
         $this->validatorName = $validatorName;
         $this->severity = $severity;
@@ -26,4 +58,6 @@ class ValidationMessage implements \Stringable
     {
         return "ValidationMessage[severity=\"{$this->severity->name}\", validatorName=\"{$this->validatorName}\", message=\"{$this->message}\", targetObject=\"{$this->targetObject}\"";
     }
+    
+    
 }

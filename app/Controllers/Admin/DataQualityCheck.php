@@ -4,6 +4,8 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use TgoeSrv\Member\Api\MemberGroupService;
+use App\Libraries\DataQualityCheckResult;
+use App\Libraries\DataQualityCheckHelper;
 
 class DataQualityCheck extends BaseController
 {
@@ -12,40 +14,28 @@ class DataQualityCheck extends BaseController
     
     public function index()
     {
-        $list = $this->getGroupListCached();
+        /**
+         * 
+         * @var DataQualityCheckResult $result
+         */
+        $result = DataQualityCheckHelper::readResult();
+        $updateTimestamp = $result->updateTimestamp;
         
-        //TODO: DOES IT MAKE SENSE TO USE CACHED DATA?
+        $validationMessages = array();
+        foreach( $result->validationMessages as $vm ) {
+            $validationMessages[$vm->__toString()] = $vm;
+        }
+        
+        ksort($validationMessages);
         
         $data = [
-            'grouplist' => $list['grouplist'],
-            'cacheage' => $list['cacheage'],
+            'updateTimestamp' => $updateTimestamp,
+            'validationMessages' => $validationMessages,
+            'statusmessage' => DataQualityCheckHelper::readStatusmessage(),
         ];
         
         return view('admin/data-quality-check/home', $data);
     }
     
-    public function refreshCache()  {
-        cache()->delete(self::GROUPLIST_CACHE_KEY);
-        return redirect()->route('admin/data-quality-check');
-    }
-    
-    private function getListsCached() : array {
-        if( !$list = cache(self::CACHE_KEY)) {
-            $srvG = new MemberGroupService();
-            $grouplist = $srvG->getAllMemberGroups(false);
-            
-            $srvM = new MemberService();
-            $members = $srvM->getAllMembers(1);
-            
-            $list = [
-                'grouplist' => $grouplist,
-                'members' => $members,
-                'cacheage' => time(),
-            ];
-                        
-            cache()->save(self::CACHE_KEY, $list, self::CACHE_DURATION);
-        }
-        
-        return $list;
-    }
+
 }
