@@ -4,6 +4,8 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use TgoeSrv\Member\Api\MemberGroupService;
+use TgoeSrv\Document\GroupMemberDataConfirmationListService;
+use TgoeSrv\Member\Api\MemberService;
 
 class MemberDataConfirmation extends BaseController
 {
@@ -25,6 +27,21 @@ class MemberDataConfirmation extends BaseController
     public function refreshCache()  {
         cache()->delete(self::GROUPLIST_CACHE_KEY);
         return redirect()->route('admin/member-data-confirmation');
+    }
+    
+    public function downloadList($key) {
+        $list = $this->getGroupListCached();
+        $group = $list['grouplist'][$key];
+        
+        $ms = new MemberService();
+        $members = $ms->findMembersOfGroup($group->getId());
+        
+        
+        $filePath = GroupMemberDataConfirmationListService::generateDocument($group, $members);
+
+        if( $filePath !== null ) {
+            return $this->response->download($filePath, null)->setFileName('test.docx');
+        }
     }
     
     private function getGroupListCached() : array {

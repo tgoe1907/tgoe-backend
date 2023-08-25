@@ -9,6 +9,8 @@ enum ConfigKey : string
     case EASYVEREIN_SERVICEURL = 'easyverein|serviceurl';
     case EASYVEREIN_CUSTOMFIELD_LOGINNAME = 'easyverein|customfield_loginname';
     case EASYVEREIN_CUSTOMFIELD_PASSWORDHASH = 'easyverein|customfield_passwordhash';
+    case ASPOSE_CLIENTID = 'aspose|clientid';
+    case ASPOSE_CLIENTSECRET = 'aspose|clientsecret';
     
     public function getSection() : string 
     {

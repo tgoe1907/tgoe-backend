@@ -14,6 +14,7 @@ Stand <?= date('H:i', $cacheage ) ?> <a href="/admin/member-data-confirmation/re
 	<tr>
 		<td><?= esc($group->getKey())?></td>
 		<td><?= esc($group->getName())?></td>
+		<td><a href='/admin/member-data-confirmation/downloadlist/<?= esc($group->getKey()) ?>'>Liste</a></td>
 	</tr>
 <?php }?>
 </table>
