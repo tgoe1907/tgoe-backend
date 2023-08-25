@@ -12,6 +12,8 @@ class MemberGroup implements \Stringable
 
     public const easyvereinDefaultOrder = "orderSequence";
 
+    
+    private const FEE_ACTIVE_MEMBER_KEY = "B-AK";
     private const FEE_GROUP_PREFIX = "B-";
 
     private int $id = - 1;
@@ -125,6 +127,16 @@ class MemberGroup implements \Stringable
     public function isMemberFeeGroup(): bool
     {
         return $this->key != null && str_starts_with($this->key, self::FEE_GROUP_PREFIX);
+    }
+    
+    /**
+     * Check if this group is used for active membership
+     *
+     * @return bool
+     */
+    public function isActiveMembershipFeeGroup(): bool
+    {
+        return $this->key != null && str_starts_with($this->key, self::FEE_ACTIVE_MEMBER_KEY);
     }
 
     /**

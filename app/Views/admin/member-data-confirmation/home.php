@@ -14,7 +14,11 @@ Stand <?= date('H:i', $cacheage ) ?> <a href="/admin/member-data-confirmation/re
 	<tr>
 		<td><?= esc($group->getKey())?></td>
 		<td><?= esc($group->getName())?></td>
-		<td><a href='/admin/member-data-confirmation/downloadlist/<?= esc($group->getKey()) ?>'>Liste</a></td>
+		<td>
+		<a href='/admin/member-data-confirmation/downloadlist/<?= esc($group->getKey()) ?>/pdf'>PDF</a>
+		|
+		<a href='/admin/member-data-confirmation/downloadlist/<?= esc($group->getKey()) ?>/word'>Word</a>
+		</td>
 	</tr>
 <?php }?>
 </table>
