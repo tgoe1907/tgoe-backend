@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Member Data Confirmation</title>
+<title>Erhebung Gruppenmitglieder</title>
 </head>
 <body>
 <h1>Erhebung Gruppenmitglieder</h1>

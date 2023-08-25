@@ -8,7 +8,7 @@ use TgoeSrv\Member\Enums\DosbSport;
 class Member implements \Stringable
 {
 
-    public const easyvereinQueryString = '{id,membershipNumber,joinDate,resignationDate,emailOrUserName,_isChairman,contactDetails{salutation,firstName,familyName,dateOfBirth,street,city,zip,privateEmail},memberGroups{memberGroup' . MemberGroup::easyvereinQueryString . '},integrationDosbSport,integrationDosbGender}';
+    public const easyvereinQueryString = '{id,membershipNumber,joinDate,resignationDate,emailOrUserName,_isChairman,contactDetails{salutation,firstName,familyName,dateOfBirth,street,city,zip,privateEmail},memberGroups{memberGroup' . MemberGroup::easyvereinQueryString . '},integrationDosbSport{title},integrationDosbGender}';
 
     public const easyvereinDefaultOrder = "membershipNumber";
 
@@ -81,7 +81,8 @@ class Member implements \Stringable
 
             $this->dosbGender = MemberDosbGender::findByKey($arr['integrationDosbGender']);
 
-            foreach ($arr['integrationDosbSport'] as $sportString) {
+            foreach ($arr['integrationDosbSport'] as $sportData) {
+                $sportString = $sportData['title'];
                 $sportString = strval($sportString);
                 if (strlen($sportString) >= 3) {
                     $sport = DosbSport::findByKey(substr($sportString, 0, 3));

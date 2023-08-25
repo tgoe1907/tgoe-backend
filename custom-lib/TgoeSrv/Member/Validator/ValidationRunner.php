@@ -9,6 +9,8 @@ use TgoeSrv\Member\Validator\Impl\SportsClassGroupCustomPropertiesValidator;
 use TgoeSrv\Member\Validator\Impl\MembershipNumberValidator;
 use TgoeSrv\Member\Validator\Impl\MembershipFeeValidator;
 use TgoeSrv\Member\Validator\Impl\MemberSalutationValidator;
+use TgoeSrv\Member\Validator\Impl\MemberDosbSportValidator;
+use TgoeSrv\Member\Validator\Impl\MembershipNumberUniqueValidator;
 
 abstract class ValidationRunner
 {
@@ -38,6 +40,14 @@ abstract class ValidationRunner
         $msg[] = $v->getMessages();
         
         $v = new MembershipNumberValidator();
+        $v->testMemberList($members);
+        $msg[] = $v->getMessages();
+        
+        $v = new MemberDosbSportValidator();
+        $v->testMemberList($members);
+        $msg[] = $v->getMessages();
+        
+        $v = new MembershipNumberUniqueValidator();
         $v->testMemberList($members);
         $msg[] = $v->getMessages();
         

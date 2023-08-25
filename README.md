@@ -65,14 +65,15 @@ This application is based on some frameworks to reduce individual code and get a
 ### Planned features
 * Consolidate idea of app configuration with CodeIgnitor. Goal is having a central place for all coniguration and no environment related configuration is contained in checked-in code.
 * Extended validation for member data (as Easyverein only provides very basic validation)
-** DOSB sports category assignment (migration from existing Java implementation)
-*** make sure it's set
-*** make sure only one is set
-*** make sure assigned category is matching category of an assigned sports group membership
+	* DOSB sports category assignment (migration from existing Java implementation)
+		* make sure assigned category is matching category of an assigned sports group membership 
+		* => implemented but NOT WORKING ATM because Easyverein does not deliver descriptionOnInvoice field in nested memberGroups structure of member service.
 * Document creation services
-** create list fors trainers to regularly check member's data
-** create welcome letters for new members
-** create cancellation confirmation letters
+	* create list fors trainers to regularly check member's data
+	* create welcome letters for new members
+	* create cancellation confirmation letters
 * Letter services
-** automatic sending of welcome letters via postal service API and e-mail
-** automatic sending of cancellation confirmation letters via postal service API abd e-mail
+	* automatic sending of welcome letters via postal service API and e-mail
+	* automatic sending of cancellation confirmation letters via postal service API abd e-mail
+* Add a nice UI
+* Module for trainer's work time recording

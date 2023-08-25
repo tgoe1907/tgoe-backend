@@ -11,10 +11,10 @@ use \TgoeSrv\Member\MemberGroup;
 ?>
 <html>
 <head>
-<title>Member Data Confirmation</title>
+<title>Qualitätsprüfung Mitgliederdaten</title>
 </head>
 <body>
-<h1>Erhebung Gruppenmitglieder</h1>
+<h1>Qualitätsprüfung Mitgliederdaten</h1>
 <br />
 <a href="/admin">zurück</a><br />
 <br />

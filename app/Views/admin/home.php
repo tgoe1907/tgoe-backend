@@ -3,7 +3,7 @@
 <title>Welcome Admin</title>
 </head>
 <body>
-Welcome <?= esc(session()->get('userdata')->getFullName()) ?>
+Willkommen <?= esc(session()->get('userdata')->getFullName()) ?>
 <br />
 <a href='/admin/member-data-confirmation'>Erhebung Gruppenmitglieder</a><br />
 <a href='/admin/data-quality-check'>Qualitätsprüfung Mitgliederdaten</a><br />
