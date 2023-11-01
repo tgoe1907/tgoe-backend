@@ -31,7 +31,7 @@ abstract class EasyvereinBase
         do {
             $queryParams['page'] ++;
 
-            Logger::info(__METHOD__.' Requesting page '.$queryParams['page']);
+            Logger::info(__METHOD__." Requesting '{$function}' page {$queryParams['page']}");
             $result = $this->executeRestQuery($function, $queryParams);
             $combinedResults = array_merge($combinedResults, $result['results']);
 

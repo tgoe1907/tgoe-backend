@@ -55,7 +55,7 @@ class DataQualityCheckHelper
         cache()->save(self::CACHE_KEY_RESULT, $data, self::CACHE_DURATION);
     }
     
-    public static function readResult() : DataQualityCheckResult {
+    public static function readResult() : ?DataQualityCheckResult {
         return cache(self::CACHE_KEY_RESULT);
     }
     

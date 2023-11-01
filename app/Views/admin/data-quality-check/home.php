@@ -18,7 +18,8 @@ use \TgoeSrv\Member\MemberGroup;
 <br />
 <a href="/admin">zurück</a><br />
 <br />
-Stand <?= date('d.m.Y H:i', $updateTimestamp ) ?>
+Status: <?= $statusMessage ?><br />
+Letzte Aktualisierung: <?= date('d.m.Y H:i', $updateTimestamp ) ?>
 
 <table border=1>
     <tr>

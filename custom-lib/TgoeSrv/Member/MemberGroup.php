@@ -15,6 +15,7 @@ class MemberGroup implements \Stringable
     
     private const FEE_ACTIVE_MEMBER_KEY = "B-AK";
     private const FEE_GROUP_PREFIX = "B-";
+    private const NON_CLASS_GROUP_PREFIX = "X-";
 
     private int $id = - 1;
 
@@ -34,10 +35,9 @@ class MemberGroup implements \Stringable
             $this->id = $arr['id'];
             $this->key = $arr['short'];
             $this->name = $arr['name'];
-            $this->orderSequence = $arr['orderSequence'];
-
-            if (isset($arr['descriptionOnInvoice']))
-                $this->description = $arr['descriptionOnInvoice'];
+            
+            if( isset($arr['orderSequence']) ) $this->orderSequence =  $arr['orderSequence'];
+            if( isset($arr['descriptionOnInvoice'])) $this->description = $arr['descriptionOnInvoice'];
         }
     }
 
@@ -146,7 +146,9 @@ class MemberGroup implements \Stringable
      */
     public function isClassGroup(): bool
     {
-        return ! $this->isMemberFeeGroup();
+        return 
+            $this->key != null &&
+            (!$this->isMemberFeeGroup() || !str_starts_with($this->key, self::NON_CLASS_GROUP_PREFIX));
     }
 }
 

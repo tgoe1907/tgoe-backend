@@ -36,7 +36,7 @@ class SportsClassGroupCustomPropertiesValidator extends MemberGroupValidator
             /* @var $p MemberGroupCustomProperty */
             $v = $memberGroup->getCustomProperty($p);
             if ($v === null) {
-                $this->addMessage(ValidationSeverity::ERROR, $memberGroup, 'Freitext-Eigenschaft fehlet: ' . $p->value);
+                $this->addMessage(ValidationSeverity::ERROR, $memberGroup, 'Freitext-Eigenschaft fehlt: ' . $p->value);
             } elseif (empty($v)) {
                 $this->addMessage(ValidationSeverity::ERROR, $memberGroup, 'Freitext-Eigenschaft hat keinen Wert: ' . $p->value);
             }

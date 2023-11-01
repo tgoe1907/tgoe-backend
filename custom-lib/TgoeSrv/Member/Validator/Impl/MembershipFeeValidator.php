@@ -26,13 +26,15 @@ class MembershipFeeValidator extends SingleMemberValidator
 
     public function __construct()
     {
+        $currentyear = intval(date('Y'));
+        
         // calculate cancellation date to ignore members for this validation
         if (intval(date('d')) > 6) {
             // use begin of next year
-            $this->effectiveCancellationDeadline = mktime(0, 0, 0, 1, 1, date('Y') + 1);
+            $this->effectiveCancellationDeadline = mktime(0, 0, 0, 1, 1, $currentyear + 1);
         } else {
             // use begin of current year
-            $this->effectiveCancellationDeadline = mktime(0, 0, 0, 1, 1, date('Y'));
+            $this->effectiveCancellationDeadline = mktime(0, 0, 0, 1, 1, $currentyear);
         }
     }
 
@@ -64,7 +66,13 @@ class MembershipFeeValidator extends SingleMemberValidator
         // check member has exactly one member fee group
         $dep = array_intersect($memberGroupKeys, self::$valid);
         if( count($dep) == 0) {
-            $this->addMessage(ValidationSeverity::ERROR, $member, "Mitglied hat keine Grundbeitrags-Gruppe." );
+            if( $member->getResignationDate() !== null ) {
+                $cancelled = date('d.m.Y', $member->getResignationDate());
+                $this->addMessage(ValidationSeverity::WARNING, $member, "Mitglied hat keine Grundbeitrags-Gruppe. Gekündigt: $cancelled" );}
+            else {
+                $this->addMessage(ValidationSeverity::ERROR, $member, "Mitglied hat keine Grundbeitrags-Gruppe." );
+            }
+
         }
         elseif( count($dep) > 1 ) {
             $this->addMessage(ValidationSeverity::ERROR, $member, "Mitglied hat mehrere Grundbeitrags-Gruppen.");

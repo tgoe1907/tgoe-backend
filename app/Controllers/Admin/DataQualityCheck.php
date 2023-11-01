@@ -14,24 +14,36 @@ class DataQualityCheck extends BaseController
     
     public function index()
     {
+        
+        
         /**
          * 
          * @var DataQualityCheckResult $result
          */
         $result = DataQualityCheckHelper::readResult();
-        $updateTimestamp = $result->updateTimestamp;
-        
-        $validationMessages = array();
-        foreach( $result->validationMessages as $vm ) {
-            $validationMessages[$vm->__toString()] = $vm;
+        if( $result === null )
+        {
+            $updateTimestamp = -1;
+            $validationMessages = array();
+            $statusMessage = 'Es liegt kein Prüfergebnis vor. Bitte Ausführung des Prüfprogramms abwarten.';
         }
-        
-        ksort($validationMessages);
+        else 
+        {
+            $updateTimestamp = $result->updateTimestamp;
+            $statusMessage = DataQualityCheckHelper::readStatusmessage();
+            
+            $validationMessages = array();
+            foreach( $result->validationMessages as $vm ) {
+                $validationMessages[$vm->__toString()] = $vm;
+            }
+            
+            ksort($validationMessages);
+        }
         
         $data = [
             'updateTimestamp' => $updateTimestamp,
             'validationMessages' => $validationMessages,
-            'statusmessage' => DataQualityCheckHelper::readStatusmessage(),
+            'statusMessage' => $statusMessage,
         ];
         
         return view('admin/data-quality-check/home', $data);
