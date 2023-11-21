@@ -147,8 +147,8 @@ class MemberGroup implements \Stringable
     public function isClassGroup(): bool
     {
         return 
-            $this->key != null &&
-            (!$this->isMemberFeeGroup() || !str_starts_with($this->key, self::NON_CLASS_GROUP_PREFIX));
+            $this->key !== null &&
+            (!$this->isMemberFeeGroup() && !str_starts_with($this->key, self::NON_CLASS_GROUP_PREFIX));
     }
 }
 

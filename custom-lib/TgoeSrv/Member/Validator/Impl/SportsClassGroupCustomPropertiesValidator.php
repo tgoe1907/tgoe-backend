@@ -10,13 +10,12 @@ use TgoeSrv\Member\Enums\DosbSport;
 
 class SportsClassGroupCustomPropertiesValidator extends MemberGroupValidator
 {
-
     private static $mandatoryProperties = [
-        MemberGroupCustomProperty::TRAINER,
-        MemberGroupCustomProperty::LOCATION,
-        MemberGroupCustomProperty::TIME,
-        MemberGroupCustomProperty::WEEKDAY,
-        MemberGroupCustomProperty::DOSB_SPORT,
+        MemberGroupCustomProperty::TRAINER => ValidationSeverity::WARNING,
+        MemberGroupCustomProperty::LOCATION => ValidationSeverity::WARNING,
+        MemberGroupCustomProperty::TIME => ValidationSeverity::WARNING,
+        MemberGroupCustomProperty::WEEKDAY => ValidationSeverity::WARNING,
+        MemberGroupCustomProperty::DOSB_SPORT => ValidationSeverity::ERROR,
     ];
 
     protected function getValidatorName(): string
@@ -32,13 +31,13 @@ class SportsClassGroupCustomPropertiesValidator extends MemberGroupValidator
         }
 
         // check mandatory properties are existing and not empty
-        foreach (self::$mandatoryProperties as $p) {
+        foreach (self::$mandatoryProperties as $p => $sev) {
             /* @var $p MemberGroupCustomProperty */
             $v = $memberGroup->getCustomProperty($p);
             if ($v === null) {
-                $this->addMessage(ValidationSeverity::ERROR, $memberGroup, 'Freitext-Eigenschaft fehlt: ' . $p->value);
+                $this->addMessage($sev, $memberGroup, 'Freitext-Eigenschaft fehlt: ' . $p->value);
             } elseif (empty($v)) {
-                $this->addMessage(ValidationSeverity::ERROR, $memberGroup, 'Freitext-Eigenschaft hat keinen Wert: ' . $p->value);
+                $this->addMessage($sev, $memberGroup, 'Freitext-Eigenschaft hat keinen Wert: ' . $p->value);
             }
         }
 

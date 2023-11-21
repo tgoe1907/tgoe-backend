@@ -45,6 +45,7 @@ Letzte Aktualisierung: <?= date('d.m.Y H:i', $updateTimestamp ) ?>
             $type = "Mitglied";
             $name = $member->getFullName();
             $id = $member->getMembershipNumber();
+            $link = 'https://easyverein.com/app/profile/'.$member->getId();
         } 
         else if( $vm->getTargetObject() instanceof MemberGroup ) {
             /**
@@ -55,6 +56,7 @@ Letzte Aktualisierung: <?= date('d.m.Y H:i', $updateTimestamp ) ?>
             $type = "Gruppe";
             $name = $group->getName();
             $id = $group->getKey();
+            $link = '#';
         }
         else {
             $type = "unbekannt";
@@ -64,7 +66,7 @@ Letzte Aktualisierung: <?= date('d.m.Y H:i', $updateTimestamp ) ?>
         ?>
         <tr>
         	<td><?= esc($type) ?></td>
-        	<td><?= esc($id)?></td>
+        	<td><a href="<?= esc($link) ?>" target='_blank'><?= esc($id)?></a></td>
         	<td><?= esc($name)?></td>
         	<td><?= esc($vm->getValidatorName())?></td>
         	<td><?= esc($vm->getSeverity()->getDisplayName())?></td>
