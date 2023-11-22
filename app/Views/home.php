@@ -1,11 +1,8 @@
-<html>
-<head>
-<title>Welcome Public Users</title>
-</head>
-<body>
-Welcome Public Users<br />
-<br />
-<a href="/login">Login</a>
+Diese App stellt Funktionen für Mitglieder und Funktionäre im Verein zur Verfügung. Bitte melde Dich an, um die App nutzen zu können.
 
-</body>
-</html>
+Login Form<br />
+<form method='POST' action='/'>
+	User <input name='loginform-usr'><br /> 
+	Password <input name='loginform-pwd' type="password"><br />
+	<input type="submit" value="check">
+</form>

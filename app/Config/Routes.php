@@ -14,9 +14,8 @@ $routes = Services::routes();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
-$routes->get('/login', 'Login::index');
-$routes->post('/login', 'Login::index');
-$routes->get('/login/logout', 'Login::logout');
+$routes->post('/', 'Home::index');
+$routes->get('/logout', 'Home::logout');
 $routes->get('/admin/', 'Admin\Home::index');
 $routes->get('/admin/member-data-confirmation', 'Admin\MemberDataConfirmation::index');
 $routes->get('/admin/member-data-confirmation/refresh', 'Admin\MemberDataConfirmation::refreshCache');

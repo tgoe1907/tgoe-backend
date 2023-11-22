@@ -18,6 +18,7 @@ This application is based on some frameworks to reduce individual code and get a
 ### Used 3rd party services
 * Easy Verein - Management solution for clubs and important source of data for this tool.
 * Aspose.Cloud - Tools for handling MS Office and PDF documents. It's commercial, but it has a nice free usage tier.
+* AdminLTE UI Template - https://github.com/ColorlibHQ/AdminLTE/releases/tag/v3.2.0
 
 # Setup Production Environment
 ### Setup web server
@@ -52,7 +53,6 @@ This application is based on some frameworks to reduce individual code and get a
 
 # Troubleshooting
 ### While running project
-
 * Error "cURL error 60: SSL certificate problem: unable to get local issuer certificate"
 	* Download cacert.pem from https://curl.se/docs/caextract.html
 	* Open your php.ini file and insert or update the following line:

@@ -1,8 +1,8 @@
 {
 	"require" : {
 		"guzzlehttp/guzzle" : "7.7.*",
-		"codeigniter4/framework" : "^4.3",
-		"aspose-cloud/aspose-words-cloud": "^23.7"
+		"codeigniter4/framework" : "4.4.*",
+		"aspose-cloud/aspose-words-cloud" : "23.*.*"
 	},
 	"autoload" : {
 		"psr-4" : {
