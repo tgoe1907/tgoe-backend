@@ -5,12 +5,46 @@ class CIHelper
 {
     private $headline = "Headline not set.";
     private $messages = array();
+    private $menuitems = array( "n" => array("far fa-image", "not defined", "#"));
+    private $activeMenuItem = "";
     
     public const MSG_ERROR = 3;
     public const MSG_WARNING = 2;
     public const MSG_INFO = 1;
     public const MSG_SUCCESS = 0;
     
+    /**
+     * @return number
+     */
+    public function getMenuitems()
+    {
+        return $this->menuitems;
+    }
+
+    /**
+     * @return number
+     */
+    public function getActiveMenuItem()
+    {
+        return $this->activeMenuItem;
+    }
+
+    /**
+     * @param number $menuitems
+     */
+    public function setMenuitems($menuitems)
+    {
+        $this->menuitems = $menuitems;
+    }
+
+    /**
+     * @param number $activeMenuItem
+     */
+    public function setActiveMenuItem($activeMenuItem)
+    {
+        $this->activeMenuItem = $activeMenuItem;
+    }
+
     /**
      * @return array:
      */
@@ -60,6 +94,22 @@ class CIHelper
         $content .= view( 'common/footer', $data );
         
         return $content;
+    }
+    
+    public function initMenuAnonymous() {
+        $this->menuitems = array();
+    }
+    
+    public function initMenuLoggedin() {
+        $this->menuitems = array( 
+            "headline-member-services" => array(null, "MITGLIEDERVERWALTUNG", null),
+            "member-data-confirmation" => array("far fa-list-alt",     "Listen Sportgruppen",    "/admin/member-data-confirmation"),
+            "data-quality-check"       => array("fas fa-check-square", "Qualitätsprüfung",       "/admin/data-quality-check"),
+            "trainer-accounting"       => array(null, "ÜBUNGSLEITERABRECHNUNG", null),
+            "trainer-administration"   => array("fas fa-users",        "Übungsleiter verwalten",  "#"),
+            "trainer-record-hours"     => array("fas fa-edit",         "Stunden erfassen",        "#"),
+        );
+       
     }
 }
 

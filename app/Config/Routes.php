@@ -16,7 +16,6 @@ $routes = Services::routes();
 $routes->get('/', 'Home::index');
 $routes->post('/', 'Home::index');
 $routes->get('/logout', 'Home::logout');
-$routes->get('/admin/', 'Admin\Home::index');
 $routes->get('/admin/member-data-confirmation', 'Admin\MemberDataConfirmation::index');
 $routes->get('/admin/member-data-confirmation/refresh', 'Admin\MemberDataConfirmation::refreshCache');
 $routes->get('/admin/member-data-confirmation/downloadlist/(:segment)/(:segment)', 'Admin\MemberDataConfirmation::downloadList/$1/$2');

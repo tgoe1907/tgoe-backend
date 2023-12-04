@@ -46,45 +46,48 @@ use App\Libraries\CIHelper;
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar user (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="<?= session()->get('userdata') !== null ? "/img/loggedin-avatar.png" : "/img/locked-avatar.png" ?>" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block"><?= session()->get('userdata') !== null ? esc(session()->get('userdata')->getFullName()) : "nicht angemeldet" ?></a>
-        </div>
-      </div>
+      <?php 
+      if( session()->get('userdata') !== null ) {
+          ?>
+          <!-- Sidebar user (optional) -->
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+              <img src="/img/loggedin-avatar.png" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+              <a href="/logout"><?= esc(session()->get('userdata')->getFullName())?> <i class="nav-icon fas fa-sign-out-alt"></i></a>
+            </div>
+          </div>
+          <?php 
+      }
+      ?>
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <li class="nav-header">EXAMPLES</li>
-          <li class="nav-item">
-            <a href="../calendar.html" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
-              <p>
-                Calendar
-                <span class="badge badge-info right">2</span>
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="../gallery.html" class="nav-link">
-              <i class="nav-icon far fa-image"></i>
-              <p>
-                Gallery
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="../kanban.html" class="nav-link">
-              <i class="nav-icon fas fa-columns"></i>
-              <p>
-                Kanban Board
-              </p>
-            </a>
-          </li>
+        <?php 
+        foreach( $ci->getMenuitems() as $key => $menuItemInfo) {
+            if( $menuItemInfo[0] === null ) {
+                ?>
+                <li class="nav-header"><?= esc($menuItemInfo[1]) ?></li>
+                <?php 
+            }
+            else
+            {
+                $isActive = $key == $ci->getActiveMenuItem();
+                ?>
+                    <li class="nav-item">
+                    <a href="<?= esc($menuItemInfo[2]) ?>" class="nav-link <?= $isActive?"active":"" ?>">
+                      <i class="nav-icon <?= esc($menuItemInfo[0]) ?>"></i>
+                      <p>
+                        <?= esc($menuItemInfo[1]) ?>
+                      </p>
+                    </a>
+                    </li>
+        		<?php 
+            }
+        }
+        ?>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

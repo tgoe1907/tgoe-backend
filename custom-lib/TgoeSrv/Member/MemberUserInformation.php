@@ -22,6 +22,14 @@ class MemberUserInformation implements \Stringable
 
     private array $customFields = array();
 
+    /**
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
     public function __construct(?array $arr = null)
     {
         if ($arr != null) {

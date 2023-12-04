@@ -23,14 +23,11 @@ class Home extends BaseController
                 // if credetials successfull, set session as logged in
                 // and redirect to admin home.
                 session()->set('userdata', $userdata);
-
-                return redirect()->route('admin');
             }
-
-            $ci->addMessage('Login fehlgeschlagen', 'Der eingegebene Benutzername oder das Passwort ist falsch.', CIHelper::MSG_ERROR);
+            else {
+                $ci->addMessage('Login fehlgeschlagen', 'Der eingegebene Benutzername oder das Passwort ist falsch.', CIHelper::MSG_ERROR);
+            }
         }
-
-        
 
         return $this->renderPage($ci, $data);
     }
@@ -46,7 +43,17 @@ class Home extends BaseController
     }
     
     private function renderPage( $ci, $data = array() ) : string {
-        $ci->setHeadline("Willkommen zur TGÖ Service App!");
-        return $ci->view('home');
+        $user = session()->get('userdata');
+        
+        if( $user === null ) {
+            $ci->setHeadline("Willkommen zur TGÖ Service App!");
+            $ci->initMenuAnonymous();
+            return $ci->view('home-anonymous');
+        }
+        else {
+            $ci->setHeadline("Hallo {$user->getFirstName()}!");
+            $ci->initMenuLoggedin();
+            return $ci->view('home-loggedin');
+        }
     }
 }
