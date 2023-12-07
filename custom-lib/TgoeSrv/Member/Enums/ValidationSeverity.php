@@ -17,5 +17,15 @@ enum ValidationSeverity
         
         return '';
     }
+    
+    public function getBackgroundCssClass() : string {
+        switch ($this) {
+            case self::ERROR: return 'bg-danger';
+            case self::WARNING: return 'bg-warning';
+            case self::INFO: return 'bg-info';
+        }
+        
+        return '';
+    }
 }
 

@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use TgoeSrv\Member\Api\MemberGroupService;
 use App\Libraries\DataQualityCheckResult;
 use App\Libraries\DataQualityCheckHelper;
+use App\Libraries\CIHelper;
 
 class DataQualityCheck extends BaseController
 {
@@ -14,7 +15,7 @@ class DataQualityCheck extends BaseController
     
     public function index()
     {
-        
+        $ci = new CIHelper();
         
         /**
          * 
@@ -25,12 +26,13 @@ class DataQualityCheck extends BaseController
         {
             $updateTimestamp = -1;
             $validationMessages = array();
-            $statusMessage = 'Es liegt kein Prüfergebnis vor. Bitte Ausführung des Prüfprogramms abwarten.';
+            $ci->addMessage('Status', 'Es liegt kein Prüfergebnis vor. Bitte Ausführung des Prüfprogramms abwarten.', CIHelper::MSG_WARNING);
         }
         else 
         {
             $updateTimestamp = $result->updateTimestamp;
             $statusMessage = DataQualityCheckHelper::readStatusmessage();
+            $ci->addMessage('Status', $statusMessage, CIHelper::MSG_INFO);
             
             $validationMessages = array();
             foreach( $result->validationMessages as $vm ) {
@@ -42,11 +44,13 @@ class DataQualityCheck extends BaseController
         
         $data = [
             'updateTimestamp' => $updateTimestamp,
-            'validationMessages' => $validationMessages,
-            'statusMessage' => $statusMessage,
+            'validationMessages' => $validationMessages
         ];
         
-        return view('admin/data-quality-check/home', $data);
+        
+        $ci->setHeadline("Qualitätsprüfung Mitgliederdaten");
+        $ci->initMenuLoggedin();
+        return $ci->view('admin/data-quality-check/home', $data);
     }
     
 

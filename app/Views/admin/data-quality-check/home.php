@@ -9,73 +9,76 @@ use \TgoeSrv\Member\MemberGroup;
  * @var DataQualityCheckResult $result
  */
 ?>
-<html>
-<head>
-<title>Qualitätsprüfung Mitgliederdaten</title>
-</head>
-<body>
-<h1>Qualitätsprüfung Mitgliederdaten</h1>
-<br />
-<a href="/admin">zurück</a><br />
-<br />
-Status: <?= $statusMessage ?><br />
-Letzte Aktualisierung: <?= date('d.m.Y H:i', $updateTimestamp ) ?>
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">Meldungen</h3>
 
-<table border=1>
-    <tr>
-    	<th>Typ</th>
-    	<th>Nr.</th>
-    	<th>Name</th>
-    	<th>Prüfung</th>
-    	<th>Schweregrad</th>
-    	<th>Beanstandung</th>
-    </tr>
-    <?php 
-    foreach($validationMessages as $vm) {
-        /**
-         * @var ValidationMessage $vm
-         */
-        
-        if( $vm->getTargetObject() instanceof Member ) {
+    <div class="card-tools">
+      Letzte Aktualisierung: <?= date('d.m.Y H:i', $updateTimestamp ) ?>
+    </div>
+  </div>
+  <div class="card-body p-0">
+    <table class="table">
+      <thead>
+        <tr>
+        	<th>Typ</th>
+        	<th>Nr.</th>
+        	<th>Name</th>
+        	<th>Prüfung</th>
+        	<th>Schweregrad</th>
+        	<th>Beanstandung</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php 
+        foreach($validationMessages as $vm) {
             /**
-             * 
-             * @var Member $member
+             * @var ValidationMessage $vm
              */
-            $member = $vm->getTargetObject();
-            $type = "Mitglied";
-            $name = $member->getFullName();
-            $id = $member->getMembershipNumber();
-            $link = 'https://easyverein.com/app/profile/'.$member->getId();
-        } 
-        else if( $vm->getTargetObject() instanceof MemberGroup ) {
-            /**
-             * 
-             * @var MemberGroup $group
-             */
-            $group = $vm->getTargetObject();
-            $type = "Gruppe";
-            $name = $group->getName();
-            $id = $group->getKey();
-            $link = '#';
-        }
-        else {
-            $type = "unbekannt";
-            $name = "";
-            $id = "";
+
+            if( $vm->getTargetObject() instanceof Member ) {
+                /**
+                 * 
+                 * @var Member $member
+                 */
+                $member = $vm->getTargetObject();
+                $type = "Mitglied";
+                $name = $member->getFullName();
+                $id = $member->getMembershipNumber();
+                $link = 'https://easyverein.com/app/profile/'.$member->getId();
+                $idHtml = '<a href="'.esc($link).'" target="_blank">'.esc($id).'</a>';
+            } 
+            else if( $vm->getTargetObject() instanceof MemberGroup ) {
+                /**
+                 * 
+                 * @var MemberGroup $group
+                 */
+                $group = $vm->getTargetObject();
+                $type = "Gruppe";
+                $name = $group->getName();
+                $id = $group->getKey();
+                $idHtml = esc($id);;
+            }
+            else {
+                $type = "unbekannt";
+                $name = "";
+                $id = "";
+            }
+            
+            
+            
+            ?>
+            <tr>
+            	<td><?= esc($type) ?></td>
+            	<td><?= $idHtml ?></td>
+            	<td><?= esc($name)?></td>
+            	<td><?= esc($vm->getValidatorName())?></td>
+            	<td><span class="badge <?= $vm->getSeverity()->getBackgroundCssClass() ?>"><?= esc($vm->getSeverity()->getDisplayName())?></span></td>
+            	<td><?= esc($vm->getMessage())?></td>
+            </tr>
+            <?php 
         }
         ?>
-        <tr>
-        	<td><?= esc($type) ?></td>
-        	<td><a href="<?= esc($link) ?>" target='_blank'><?= esc($id)?></a></td>
-        	<td><?= esc($name)?></td>
-        	<td><?= esc($vm->getValidatorName())?></td>
-        	<td><?= esc($vm->getSeverity()->getDisplayName())?></td>
-        	<td><?= esc($vm->getMessage())?></td>
-        </tr>
-        <?php 
-    }
-    ?>
-</table>
-
-</body>
-</html>
+      </tbody>
+    </table>
+  </div>

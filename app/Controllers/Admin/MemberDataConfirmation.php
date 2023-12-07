@@ -7,6 +7,7 @@ use TgoeSrv\Member\Api\MemberGroupService;
 use TgoeSrv\Document\GroupMemberDataConfirmationListService;
 use TgoeSrv\Member\Api\MemberService;
 use TgoeSrv\Member\MemberGroup;
+use App\Libraries\CIHelper;
 
 class MemberDataConfirmation extends BaseController
 {
@@ -22,7 +23,10 @@ class MemberDataConfirmation extends BaseController
             'cacheage' => $list['cacheage'],
         ];
         
-        return view('admin/member-data-confirmation/home', $data);
+        $ci = new CIHelper();
+        $ci->setHeadline("Erhebung Gruppenmitglieder");
+        $ci->initMenuLoggedin();
+        return $ci->view('admin/member-data-confirmation/home', $data);
     }
     
     public function refreshCache()  {

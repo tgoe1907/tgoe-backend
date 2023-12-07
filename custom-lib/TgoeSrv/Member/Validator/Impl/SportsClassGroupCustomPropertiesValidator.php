@@ -11,13 +11,18 @@ use TgoeSrv\Member\Enums\DosbSport;
 class SportsClassGroupCustomPropertiesValidator extends MemberGroupValidator
 {
     private static $mandatoryProperties = [
-        MemberGroupCustomProperty::TRAINER => ValidationSeverity::WARNING,
-        MemberGroupCustomProperty::LOCATION => ValidationSeverity::WARNING,
-        MemberGroupCustomProperty::TIME => ValidationSeverity::WARNING,
-        MemberGroupCustomProperty::WEEKDAY => ValidationSeverity::WARNING,
-        MemberGroupCustomProperty::DOSB_SPORT => ValidationSeverity::ERROR,
+        MemberGroupCustomProperty::TRAINER,
+        MemberGroupCustomProperty::LOCATION,
+        MemberGroupCustomProperty::TIME,
+        MemberGroupCustomProperty::WEEKDAY,
+        MemberGroupCustomProperty::DOSB_SPORT,
     ];
 
+    private function getSeverityForProperty( MemberGroupCustomProperty $p ) : ValidationSeverity {
+        if( $p == MemberGroupCustomProperty::DOSB_SPORT ) return ValidationSeverity::ERROR;
+        return ValidationSeverity::WARNING;
+    }
+    
     protected function getValidatorName(): string
     {
         return 'Freitext-Eigenschaften der Gruppe prüfen';
@@ -31,9 +36,10 @@ class SportsClassGroupCustomPropertiesValidator extends MemberGroupValidator
         }
 
         // check mandatory properties are existing and not empty
-        foreach (self::$mandatoryProperties as $p => $sev) {
+        foreach (self::$mandatoryProperties as $p) {
             /* @var $p MemberGroupCustomProperty */
             $v = $memberGroup->getCustomProperty($p);
+            $sev = $this->getSeverityForProperty($p);
             if ($v === null) {
                 $this->addMessage($sev, $memberGroup, 'Freitext-Eigenschaft fehlt: ' . $p->value);
             } elseif (empty($v)) {
