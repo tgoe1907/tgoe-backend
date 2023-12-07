@@ -16,7 +16,7 @@ class MemberGroupService extends EasyvereinBase
     {
         $queryParams = [
             'query' => MemberGroup::easyvereinQueryString,
-            'orderString' => MemberGroup::easyvereinDefaultOrder
+            'ordering' => MemberGroup::easyvereinDefaultOrder
         ];
         
         $resultList = $this->executeRestQueryWithPaging('member-group', $queryParams);

@@ -10,7 +10,7 @@ class Member implements \Stringable
 
     public const easyvereinQueryString = '{id,membershipNumber,joinDate,resignationDate,emailOrUserName,_isChairman,contactDetails{salutation,firstName,familyName,dateOfBirth,street,city,zip,privateEmail},memberGroups{memberGroup' . MemberGroup::easyvereinQueryString . '},integrationDosbSport{title},integrationDosbGender}';
 
-    public const easyvereinDefaultOrder = "membershipNumber";
+    public const easyvereinDefaultOrder = "contactDetails__familyName,contactDetails__firstName";
 
     private int $id = - 1;
 

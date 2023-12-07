@@ -89,7 +89,7 @@ class GroupMemberDataConfirmationListService
         $requestTemplate = AsposeCloudFactory::getTemplateDirectory(self::TEMPLATE_FILE);
         $requestOptions = new FieldOptions([
             "current_user" => new UserInformation([
-                "name" => "TGÖ Online Services"
+                "name" => "TGÖ Online Services / GroupMemberDataConfirmationListService"
             ])
         ]);
 

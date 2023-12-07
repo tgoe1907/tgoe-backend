@@ -27,7 +27,7 @@ class MemberService extends EasyvereinBase
     {
         $queryParams = [
             'query' => Member::easyvereinQueryString,
-            'orderString' => Member::easyvereinDefaultOrder,
+            'ordering' => Member::easyvereinDefaultOrder,
             'memberGroups' => $groupId,
         ];
         
