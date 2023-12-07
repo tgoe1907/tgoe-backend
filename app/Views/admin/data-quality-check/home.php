@@ -82,3 +82,4 @@ use \TgoeSrv\Member\MemberGroup;
       </tbody>
     </table>
   </div>
+</div>
