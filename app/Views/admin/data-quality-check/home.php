@@ -2,7 +2,7 @@
 use App\Libraries\DataQualityCheckResult;
 use TgoeSrv\Member\Validator\ValidationMessage;
 use TgoeSrv\Member\Member;
-use \TgoeSrv\Member\MemberGroup;
+use TgoeSrv\Member\MemberGroup;
 
 /**
  *

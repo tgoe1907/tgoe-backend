@@ -63,7 +63,7 @@ class MemberDataConfirmation extends BaseController
             
             //remove membership groups
             foreach( $grouplist as $k=>$g ) {
-                if( $g->isMemberFeeGroup() ) unset( $grouplist[$k] );
+                if( !$g->isClassGroup() ) unset( $grouplist[$k] );
             }
             
             $list = [

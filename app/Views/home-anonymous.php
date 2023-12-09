@@ -19,11 +19,6 @@
         <label for="loginform-pwd">Passwort</label>
         <input type="password" class="form-control" name='loginform-pwd' id="loginform-pwd" placeholder="Passwort eingeben">
       </div>
-
-      <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="persist-login-cookie" name="persist-login-cookie" value="1">
-        <label class="form-check-label" for="persist-login-cookie">angemeldet bleiben (not implemented, yet)</label>
-      </div>
     </div>
     <div class="card-footer">
       <button type="submit" class="btn btn-outline-primary btn-block"><i class="fa fa-sign-in-alt"></i> anmelden</button>

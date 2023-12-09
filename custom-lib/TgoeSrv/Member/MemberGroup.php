@@ -66,7 +66,7 @@ class MemberGroup implements \Stringable
         return $this->description;
     }
 
-    public function getOrderSequence(): string
+    public function getOrderSequence(): int
     {
         return $this->orderSequence;
     }

@@ -14,9 +14,9 @@ class ConfigManager
     private function __construct()
     {
         // try to find file
-        $configFile = stream_resolve_include_path(self::CONFIG_FILE_NAME);
-        if ($configFile === false) {
-            throw new \Exception('Cannot find config file in include path. Expected file name is ' . self::CONFIG_FILE_NAME);
+        $configFile = ROOTPATH . self::CONFIG_FILE_NAME;
+        if (!file_exists($configFile)) {
+            throw new \Exception('Cannot find config file in application root path. Expected file name is ' . $configFile);
         }
 
         $this->iniArray = parse_ini_file($configFile, true);
