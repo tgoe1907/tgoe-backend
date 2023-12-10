@@ -23,20 +23,24 @@ This application is based on some frameworks to reduce individual code and get a
 # Setup Production Environment
 ### Setup web server
 * Setup webserver to work with PHP 8.2
-** Use HTTPS only for public access to protect passwords and sensitive member information.
-** Do not use built-in web-server of PHP. It's only intended for development environments. Use something like Apache httpd or NGINX.
-** Set web root directory to "public" of the project. For security reasons, internet users must not be able to access any content outside this directory.
-** Modules needed: curl, openssl, intl, mbstring
-** Recommended settings:
-*** Some background jobs (e.g. validations or big lists) need a lot of time to query APIs. This usually exceeds PHP's default for maximum execution time. It's highly recommended to set it to a bigger value e.g. 300 (seconds).
+	* Use HTTPS only for public access to protect passwords and sensitive member information.
+	* Do not use built-in web-server of PHP. It's only intended for development environments. Use something like Apache httpd or NGINX.
+	* Set web root directory to "public" of the project. For security reasons, internet users must not be able to access any content outside this directory.
+	* Modules needed: curl, openssl, intl, mbstring
+	* Recommended settings:
+		* Some background jobs (e.g. validations or big lists) need a lot of time to query APIs. This usually exceeds PHP's default for maximum execution time. It's highly recommended to set it to a bigger value e.g. 300 (seconds).
 * Checkout/export project from Git repository
 * Download dependencies
 	* Install composer.phar to project directory or other position in PHP's include path.
-	* Run 'php composer.phar update' (or composer-update.bat) to download dependencies to verndor directory.
-* Create configuration file
-** Create 'tgoe-config.ini' file and provide all needed values. You can use 'tgoe-config.ini-template' as a template.
-** Make sure position is at a secure place, as it contains secret information as passwords.
-** It's recommended to choose position according to your OS's philosiphy for config files. Just make sure you add it to PHP's include path.
+	* Run 'composer install' (or 'php composer.phar install' depending to your installation and OS) to download dependencies to vendor directory.
+* Create Code Igniter environment file
+	* Create '.env' file as a copy of '.env-template'
+	* Set CI_ENVIRONMENT = production
+	* Set app.baseURL to the base URL for the application (used to build absolute redirections URLs)
+* Create TGÖ App configuration file 'tgoe-config.ini'
+	* Create 'tgoe-config.ini' file and provide all needed values. You can use 'tgoe-config.ini-template' as a template.
+	* Make sure position is at a secure place, as it contains secret information as passwords.
+	* It's recommended to choose position according to your OS's philosiphy for config files. Just make sure you add it to PHP's include path.
 
 # Setup Development Environment
 ### Setup and run project
@@ -63,17 +67,16 @@ This application is based on some frameworks to reduce individual code and get a
 
 # Roadmap
 ### Planned features
-* Consolidate idea of app configuration with CodeIgnitor. Goal is having a central place for all coniguration and no environment related configuration is contained in checked-in code.
-* Extended validation for member data (as Easyverein only provides very basic validation)
-	* DOSB sports category assignment (migration from existing Java implementation)
-		* make sure assigned category is matching category of an assigned sports group membership 
-		* => implemented but NOT WORKING ATM because Easyverein does not deliver descriptionOnInvoice field in nested memberGroups structure of member service.
+* Consolidate idea of app configuration with CodeIgnitor. Goal is having a central place for all coniguration and no environment related configuration is contained in checked-in code. Maybe integrate content of 'tgoe-config.ini' with Code Igniter's '.env' file (if possible).
+* Security
+	* Implement access control system, so we can unlock certain features on user level.
+	* Implement parameterized roles, e.g. for assigning a trainer to his sports groups.
+	* Implement brute force protection, e.g. lock user after 3 failed login attempts.
 * Document creation services
-	* create list fors trainers to regularly check member's data
+	* create list for trainers to regularly check member's data
 	* create welcome letters for new members
 	* create cancellation confirmation letters
 * Letter services
 	* automatic sending of welcome letters via postal service API and e-mail
 	* automatic sending of cancellation confirmation letters via postal service API abd e-mail
-* Add a nice UI
 * Module for trainer's work time recording
