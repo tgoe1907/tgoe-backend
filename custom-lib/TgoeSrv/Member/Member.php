@@ -8,7 +8,7 @@ use TgoeSrv\Member\Enums\DosbSport;
 class Member implements \Stringable
 {
 
-    public const easyvereinQueryString = '{id,membershipNumber,joinDate,resignationDate,emailOrUserName,_isChairman,contactDetails{salutation,firstName,familyName,dateOfBirth,street,city,zip,privateEmail},memberGroups{memberGroup' . MemberGroup::easyvereinQueryString . '},integrationDosbSport{title},integrationDosbGender}';
+    public const easyvereinQueryString = '{id,membershipNumber,joinDate,resignationDate,emailOrUserName,_isChairman,contactDetails{salutation,firstName,familyName,dateOfBirth,street,city,zip,privateEmail},memberGroups{memberGroup' . MemberGroup::easyvereinQueryString . '},integrationDosbSport{title},integrationDosbGender,relatedMembers{membershipNumber},_relatedMember{membershipNumber}}';
 
     public const easyvereinDefaultOrder = "contactDetails__familyName,contactDetails__firstName";
 
@@ -45,6 +45,11 @@ class Member implements \Stringable
     private array $dosbSport = array();
 
     private array $memberGroups = array();
+    
+    private array $childMemberNumbers = array();
+    
+    private ?string $parentMemberNumber = null;
+
 
     public function __construct(?array $arr = null)
     {
@@ -89,6 +94,14 @@ class Member implements \Stringable
                     if (isset($sport))
                         $this->dosbSport[$sport->getKey()] = $sport;
                 }
+            }
+            
+            foreach ($arr['relatedMembers'] as $relMember) {
+                $this->childMemberNumbers[] = $relMember['membershipNumber'];
+            }
+            
+            if( $arr['_relatedMember'] !== null && count($arr['_relatedMember']) > 0) {
+                $this->parentMemberNumber = $arr['_relatedMember']['membershipNumber'];
             }
         }
     }
@@ -250,6 +263,22 @@ class Member implements \Stringable
     {
         return $this->memberGroups;
     }
+    
+    /**
+     * @return array
+     */
+    public function getChildMemberNumbers() : array
+    {
+        return $this->childMemberNumbers;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getParentMemberNumber() : ?string
+    {
+        return $this->parentMemberNumber;
+    }
 
     /**
      * Combine first name and family name delimited by space.
@@ -261,6 +290,39 @@ class Member implements \Stringable
     public function getFullName(): string
     {
         return $this->firstName . (! empty($this->firstName) ? ' ' : '') . $this->familyName;
+    }
+    
+    /**
+     * Calculate age of member by using bith date
+     * 
+     * @param ?int $referenceDate Reference date for age calculation. If not set, age on current day is calculated.
+     * @return int
+     */
+    public function getAge( ?int $referenceDate = null ) : int
+    {
+        if( $this->getDateOfBirth() === null ) return 0;
+        if( $referenceDate === null ) $referenceDate = time();
+        
+        //calculate age by year only
+        $years = intval(date('Y', $referenceDate)) - intval(date('Y', $this->getDateOfBirth()));
+                
+        //In case birthday is after reference date, member did not have birthday in this year, yet.
+        //To check this, calculate day of birthday in reference year.
+        if( $referenceDate> mktime(0,0,0,intval(date('m', $this->getDateOfBirth())), intval(date('d', $this->getDateOfBirth())), intval(date('Y', $referenceDate)) )) {
+            $years--;
+        }
+        
+        return $years;
+    }
+    
+    /**
+     * Check is member is below 18 years old.
+     * 
+     * @return bool
+     */
+    public function isUnder18() : bool
+    {
+        return $this->getAge() < 18;
     }
 }
 

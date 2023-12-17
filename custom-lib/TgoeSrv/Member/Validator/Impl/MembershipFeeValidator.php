@@ -21,6 +21,11 @@ class MembershipFeeValidator extends SingleMemberValidator
         'B-GS',
         'B-GF'
     ];
+    
+    
+    private static array $onlyU18 = [
+        'B-FA',
+    ];
 
     private int $effectiveCancellationDeadline;
 
@@ -78,6 +83,13 @@ class MembershipFeeValidator extends SingleMemberValidator
             $this->addMessage(ValidationSeverity::ERROR, $member, "Mitglied hat mehrere Grundbeitrags-Gruppen.");
         }
         
+        //check old members have free family groups
+        if( !$member->isUnder18() ) {
+            $u = array_intersect($memberGroupKeys, self::$onlyU18);
+            if( count($u) > 0) {
+                $this->addMessage(ValidationSeverity::ERROR, $member, "Mitglied ab 18 Jahren darf keine Familienbeitrags-Gruppe haben.");
+            }
+        }
     }
 }
 

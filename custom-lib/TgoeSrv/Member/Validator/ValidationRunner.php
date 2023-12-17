@@ -11,6 +11,8 @@ use TgoeSrv\Member\Validator\Impl\MembershipFeeValidator;
 use TgoeSrv\Member\Validator\Impl\MemberSalutationValidator;
 use TgoeSrv\Member\Validator\Impl\MemberDosbSportValidator;
 use TgoeSrv\Member\Validator\Impl\MembershipNumberUniqueValidator;
+use TgoeSrv\Member\Validator\Impl\FamilyMembershipValidator;
+
 
 abstract class ValidationRunner
 {
@@ -33,7 +35,6 @@ abstract class ValidationRunner
         $v = new MemberSalutationValidator();
         $v->testMemberList($members);
         $msg[] = $v->getMessages();
-        
        
         $v = new MembershipFeeValidator();
         $v->testMemberList($members);
@@ -53,6 +54,10 @@ abstract class ValidationRunner
         
         $v = new SportsClassGroupCustomPropertiesValidator();
         $v->testMemberGroupList($grouplist);
+        $msg[] = $v->getMessages();
+        
+        $v = new FamilyMembershipValidator();
+        $v->testMemberList($members);
         $msg[] = $v->getMessages();
         
         //flatten result messages array

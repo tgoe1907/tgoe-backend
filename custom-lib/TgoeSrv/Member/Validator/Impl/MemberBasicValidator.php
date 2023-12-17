@@ -18,7 +18,23 @@ class MemberBasicValidator extends SingleMemberValidator
 
     public function testMember(Member $member): void
     {
+        if( $member->getResignationDate() < time() ) {
+            //do not validate resigned members
+            continue;
+        }
+        
         $error = false;
+        
+        if (empty($member->getStreet())) {
+            $this->addMessage(ValidationSeverity::WARNING, $member, "Straße sollte nicht leer sein.");
+            $error = true;
+        }
+        
+        if (empty($member->getCity()) || empty($member->getZip())) {
+            $this->addMessage(ValidationSeverity::WARNING, $member, "Ort/PLZ sollte nicht leer sein.");
+            $error = true;
+        }
+       
         
         if (empty($member->getJoinDate()) || $member->getJoinDate() < self::DATE_1907) {
             $this->addMessage(ValidationSeverity::WARNING, $member, "Beitrittsdatum sollte nicht leer sein.");

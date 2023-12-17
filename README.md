@@ -68,6 +68,10 @@ This application is based on some frameworks to reduce individual code and get a
 # Roadmap
 ### Planned features
 * Consolidate idea of app configuration with CodeIgnitor. Goal is having a central place for all coniguration and no environment related configuration is contained in checked-in code. Maybe integrate content of 'tgoe-config.ini' with Code Igniter's '.env' file (if possible).
+* additional member validators
+	* user name = membership number (except for administator users)
+	* custom user name for services app = user name?
+	* when using bank debit, check for all fields filled (e.g. mandate date)
 * Security
 	* Implement access control system, so we can unlock certain features on user level.
 	* Implement parameterized roles, e.g. for assigning a trainer to his sports groups.
