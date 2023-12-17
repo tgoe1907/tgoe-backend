@@ -20,7 +20,7 @@ class MemberBasicValidator extends SingleMemberValidator
     {
         if( $member->getResignationDate() < time() ) {
             //do not validate resigned members
-            continue;
+            return;
         }
         
         $error = false;
