@@ -47,6 +47,7 @@ class FamilyMembershipValidator extends MemberListValidator
             }
         }
         
+     
         foreach( $familyList as $parentMembershipNumber => $familyMembers ) {
             /**
              * @var Member $parent
@@ -74,7 +75,7 @@ class FamilyMembershipValidator extends MemberListValidator
                     $k = $group->getKey();
                     
                     //do not count for resigned members
-                    if( $m->getResignationDate() < time() ) {
+                    if( $m->getResignationDate() !== null && $m->getResignationDate() < time() ) {
                         continue;
                     }
                     
@@ -83,7 +84,7 @@ class FamilyMembershipValidator extends MemberListValidator
                         break;
                     }
                     
-                    if(  $k == $this->payingGroupKey ) {
+                    if( $k == $this->payingGroupKey ) {
                         if( $m->isUnder18() ) {
                             $countPayingUnder18++;
                         }
@@ -95,6 +96,8 @@ class FamilyMembershipValidator extends MemberListValidator
                     }
                 }
             }
+            
+            //echo "$parentMembershipNumber / countFree $countFree / countPayingOver18 $countPayingOver18 / countPayingUnder18 $countPayingUnder18 \r\n";
             
             //Note: Members over 18 years using free family membership are already reported by MembershipFeeValidator.
             

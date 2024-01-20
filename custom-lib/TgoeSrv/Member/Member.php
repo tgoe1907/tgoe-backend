@@ -142,7 +142,7 @@ class Member implements \Stringable
      *
      * @return number
      */
-    public function getResignationDate()
+    public function getResignationDate() : ?int
     {
         return $this->resignationDate;
     }
