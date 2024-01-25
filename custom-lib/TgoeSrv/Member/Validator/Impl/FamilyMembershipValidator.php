@@ -47,7 +47,6 @@ class FamilyMembershipValidator extends MemberListValidator
             }
         }
         
-     
         foreach( $familyList as $parentMembershipNumber => $familyMembers ) {
             /**
              * @var Member $parent
@@ -96,8 +95,6 @@ class FamilyMembershipValidator extends MemberListValidator
                     }
                 }
             }
-            
-            //echo "$parentMembershipNumber / countFree $countFree / countPayingOver18 $countPayingOver18 / countPayingUnder18 $countPayingUnder18 \r\n";
             
             //Note: Members over 18 years using free family membership are already reported by MembershipFeeValidator.
             

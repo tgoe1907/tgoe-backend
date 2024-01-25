@@ -9,70 +9,72 @@ use TgoeSrv\Member\Enums\DosbSport;
 
 class MemberDosbSportValidator extends SingleMemberValidator
 {
+
     private int $nextReportingDate;
 
     public function __construct()
     {
-        //find next end of january
+        // find next end of january
         $y = date("Y");
-        if( date('m') > 1 ) $y++;
-        $this->nextReportingDate = mktime(23,59,59,1,31,$y);
+        if (date('m') > 1)
+            $y ++;
+        $this->nextReportingDate = mktime(23, 59, 59, 1, 31, $y);
     }
-    
 
     protected function getValidatorName(): string
     {
         return 'DOSB Sportart-Zuordnung';
     }
 
-    public function testMember(Member $member) : void
+    public function testMember(Member $member): void
     {
-        //in case member cancelled membership before next reporting to DOSB,
-        //we can skip validation
-        if( $member->getResignationDate() !== null && $member->getResignationDate() < $this->nextReportingDate ) {
+        // in case member cancelled membership before next reporting to DOSB,
+        // we can skip validation
+        if ($member->getResignationDate() !== null && $member->getResignationDate() < $this->nextReportingDate) {
             return;
         }
-        
+
         // check number of assigned sports
-        $sports = $member->getDosbSport();
-        
-        if( count($sports) == 0 ) {
+        $sportsOfMember = $member->getDosbSport();
+        if (count($sportsOfMember) == 0) {
             $this->addMessage(ValidationSeverity::WARNING, $member, "Es ist keine DOSB Sportart zugeordnet.");
         }
-        else if (count($sports)>1) {
-            $this->addMessage(ValidationSeverity::WARNING, $member, "Es sind mehrere DOSB Sportarten zugeordent.");
-        }
-            
-        // check match between group memberships and assigned sports
+
+        // Build list containing all DosbSport values of assigned membership groups.
+        // Use hashmap to make sure we don't duplicate DOSB sports in the list.
         $groups = $member->getMemberGroups();
-        if( count($groups) > 0 ) {
-            //build list containing all DosbSport values of 
-            //assigned membership groups
-            $sportsOfGroups = array();
-            foreach( $groups as $g ) {
+        $sportsOfGroups = array();
+        if (count($groups) > 0) {
+            foreach ($groups as $g) {
                 /**
-                 *  @var $g MemberGroup
-                 *  @var $s ?DosbSport
+                 *
+                 * @var $g MemberGroup
+                 * @var $s ?DosbSport
                  */
                 $s = $g->getDosbSportCustomProperty();
-                if( $s !== null && $s != DosbSport::UNKNOWN ) {
-                    $sportsOfGroups[] = $s;
-                }
-            }
-            
-            //if we collected some sports, check agains assigned DOSB sport
-            if( count($sportsOfGroups) > 0 ) {
-                $match = false;
-                foreach( $sportsOfGroups as $sog ) {
-                    $match |= in_array($sog, $sports);
-                }
-                
-                if( !$match ) {
-                    $this->addMessage(ValidationSeverity::WARNING, $member, 'Zugeordnete DOSB Sportart passt nicht zu den aktiven Sportgruppen.');
+                if ($s !== null && $s != DosbSport::UNKNOWN) {
+                    $sportsOfGroups[$s->getKey()] = $s;
                 }
             }
         }
-        
+
+        // if we collected some sports from assigned groups, make sure member has all sports assigned
+        if (count($sportsOfGroups) > 0) {
+            foreach ($sportsOfGroups as $sportOfGroup) {
+                if (! in_array($sportOfGroup, $sportsOfMember)) {
+                    $this->addMessage(ValidationSeverity::WARNING, $member, 'DOSB Sportart fehlt: ' . $sportOfGroup->getName());
+                }
+            }
+        }
+
+        // If there is more than one sport assigned to the member, make sure it matches with the groups.
+        if (count($sportsOfMember) > 1) {
+            foreach( $sportsOfMember as $sportOfMember ) {
+                if (! in_array($sportOfMember, $sportsOfGroups)) {
+                    $this->addMessage(ValidationSeverity::WARNING, $member, 'DOSB Sportart ggf. entfernen (eine behalten): ' . $sportOfMember->getName());
+                }
+            }
+        }
     }
 }
 

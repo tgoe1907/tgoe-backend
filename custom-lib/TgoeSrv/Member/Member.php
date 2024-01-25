@@ -308,7 +308,7 @@ class Member implements \Stringable
                 
         //In case birthday is after reference date, member did not have birthday in this year, yet.
         //To check this, calculate day of birthday in reference year.
-        if( $referenceDate> mktime(0,0,0,intval(date('m', $this->getDateOfBirth())), intval(date('d', $this->getDateOfBirth())), intval(date('Y', $referenceDate)) )) {
+        if( $referenceDate < mktime(0,0,0,intval(date('m', $this->getDateOfBirth())), intval(date('d', $this->getDateOfBirth())), intval(date('Y', $referenceDate)) )) {
             $years--;
         }
         
