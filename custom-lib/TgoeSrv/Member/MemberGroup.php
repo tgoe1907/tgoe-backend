@@ -8,7 +8,7 @@ use TgoeSrv\Member\Enums\MemberGroupCustomProperty;
 class MemberGroup implements \Stringable
 {
 
-    public const easyvereinQueryString = "{id,name,short,descriptionOnInvoice,orderSequence}";
+    public const easyvereinQueryString = "{id,name,short,descriptionOnInvoice,orderSequence,linkedItems}";
 
     public const easyvereinDefaultOrder = "orderSequence";
 
@@ -26,6 +26,8 @@ class MemberGroup implements \Stringable
     private string $description = '';
 
     private int $orderSequence = - 1;
+    
+    private int $linkedItems = 0;
 
     private array $customPropertyCache;
 
@@ -35,6 +37,7 @@ class MemberGroup implements \Stringable
             $this->id = $arr['id'];
             $this->key = $arr['short'];
             $this->name = $arr['name'];
+            $this->linkedItems = intval($arr['linkedItems']);
             
             if( isset($arr['orderSequence']) ) $this->orderSequence =  $arr['orderSequence'];
             if( isset($arr['descriptionOnInvoice'])) $this->description = $arr['descriptionOnInvoice'];
@@ -69,6 +72,11 @@ class MemberGroup implements \Stringable
     public function getOrderSequence(): int
     {
         return $this->orderSequence;
+    }
+    
+    public function getLinkedItems(): int
+    {
+        return $this->linkedItems;
     }
 
     /**

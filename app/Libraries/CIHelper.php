@@ -101,9 +101,11 @@ class CIHelper
     }
     
     public function initMenuLoggedin() {
+        //icon schemes fas, far, fal, fad, and fab
         $this->menuitems = array( 
             "headline-member-services" => array(null, "MITGLIEDERVERWALTUNG", null),
             "member-data-confirmation" => array("far fa-list-alt",     "Listen Sportgruppen",    "/admin/member-data-confirmation"),
+            "division-statistics"      => array("fa fa-chart-line",    "Abteilungs-Statistik",   "/admin/division-statistics"),
             "data-quality-check"       => array("fas fa-check-square", "Qualitätsprüfung",       "/admin/data-quality-check"),
             "trainer-accounting"       => array(null, "ÜBUNGSLEITERABRECHNUNG", null),
             "trainer-administration"   => array("fas fa-users",        "Übungsleiter verwalten",  "#"),

@@ -20,6 +20,7 @@ $routes->get('/admin/member-data-confirmation', 'Admin\MemberDataConfirmation::i
 $routes->get('/admin/member-data-confirmation/refresh', 'Admin\MemberDataConfirmation::refreshCache');
 $routes->get('/admin/member-data-confirmation/downloadlist/(:segment)/(:segment)', 'Admin\MemberDataConfirmation::downloadList/$1/$2');
 $routes->get('/admin/data-quality-check', 'Admin\DataQualityCheck::index');
+$routes->get('/admin/division-statistics', 'Admin\DivisionStatistics::index');
 
 /*
  * --------------------------------------------------------------------
