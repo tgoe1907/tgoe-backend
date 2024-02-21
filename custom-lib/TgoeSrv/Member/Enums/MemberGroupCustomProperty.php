@@ -9,6 +9,7 @@ enum MemberGroupCustomProperty : string
     case TIME = 'Zeit';
     case LOCATION = 'Ort';
     case DOSB_SPORT = 'DOSB-Sportart';
+    case COST_CENTER = 'Kostenstelle';
     
     /**
      * Find enum value matching the key. Uses ignore case string comparison.

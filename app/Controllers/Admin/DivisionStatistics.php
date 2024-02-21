@@ -7,6 +7,7 @@ use TgoeSrv\Member\Api\MemberGroupService;
 use App\Libraries\DataQualityCheckResult;
 use App\Libraries\DataQualityCheckHelper;
 use App\Libraries\CIHelper;
+use TgoeSrv\Member\Enums\MemberGroupCustomProperty;
 
 class DivisionStatistics extends BaseController
 {
@@ -19,6 +20,7 @@ class DivisionStatistics extends BaseController
         $groups = $gs->getAllMemberGroups(false);
         
         $divisions = array();
+        $costcenters = array();
         
         foreach( $groups as $k => $g ) {
             if( strlen($k) < 2 ) continue;
@@ -27,24 +29,40 @@ class DivisionStatistics extends BaseController
             //use first 2 characters of group as division key
             $divisionKey = substr($k,0,2);
             
-            //summarize linked items
+            //get cost center from group
+            $ccKey = $g->getCustomProperty(MemberGroupCustomProperty::COST_CENTER);
+            
+            //summarize by divisions
             if( !isset($divisions[$divisionKey])) $divisions[$divisionKey] = 0;
             $divisions[$divisionKey] += $g->getLinkedItems();
+            
+            //summarize by cost centers
+            if( !isset($costcenters[$ccKey])) $costcenters[$ccKey] = 0;
+            $costcenters[$ccKey] += $g->getLinkedItems();
         }
         
-        //calculate percentages
+        //calculate percentages for divisions
         $totalCount = array_sum( $divisions );
-        $percentages = array();
+        $divisionPercentages = array();
         foreach( $divisions as $k => $v ) {
-            $percentages[$k] = round( $v/$totalCount*100, 1 );
+            $divisionPercentages[$k] = round( $v/$totalCount*100, 1 );
         }
         
-        //sort array by key
+        //calculate percentages for cost centers
+        $totalCount = array_sum( $costcenters );
+        $costcenterPercentages = array();
+        foreach( $costcenters as $k => $v ) {
+            $costcenterPercentages[$k] = round( $v/$totalCount*100, 1 );
+        }
+        
+        //sort arrays by key
         ksort($divisions);
         
         $data = [
             'divisions' => $divisions,
-            'percentages' => $percentages 
+            'divisionPercentages' => $divisionPercentages,
+            'costcenters' => $costcenters,
+            'costcenterPercentages' => $costcenterPercentages,
         ];
         
         

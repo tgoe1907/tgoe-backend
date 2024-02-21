@@ -16,6 +16,7 @@ class SportsClassGroupCustomPropertiesValidator extends MemberGroupValidator
         MemberGroupCustomProperty::TIME,
         MemberGroupCustomProperty::WEEKDAY,
         MemberGroupCustomProperty::DOSB_SPORT,
+        MemberGroupCustomProperty::COST_CENTER,
     ];
 
     private function getSeverityForProperty( MemberGroupCustomProperty $p ) : ValidationSeverity {
