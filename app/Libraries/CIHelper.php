@@ -102,16 +102,28 @@ class CIHelper
     
     public function initMenuLoggedin() {
         //icon schemes fas, far, fal, fad, and fab
-        $this->menuitems = array( 
-            "headline-member-services" => array(null, "MITGLIEDERVERWALTUNG", null),
-            "member-data-confirmation" => array("far fa-list-alt",     "Listen Sportgruppen",    "/admin/member-data-confirmation"),
-            "division-statistics"      => array("fa fa-chart-line",    "Abteilungs-Statistik",   "/admin/division-statistics"),
-            "data-quality-check"       => array("fas fa-check-square", "Qualitätsprüfung",       "/admin/data-quality-check"),
-            "trainer-accounting"       => array(null, "ÜBUNGSLEITERABRECHNUNG", null),
-            "trainer-administration"   => array("fas fa-users",        "Übungsleiter verwalten",  "#"),
-            "trainer-record-hours"     => array("fas fa-edit",         "Stunden erfassen",        "#"),
-        );
-       
+        
+        $memberManagement = array();
+        $memberManagement["member-data-confirmation"] = array("far fa-list-alt",     "Listen Sportgruppen",    "/admin/member-data-confirmation");
+        $memberManagement["division-statistics"]      = array("fa fa-chart-line",    "Abteilungs-Statistik",   "/admin/division-statistics");
+        $memberManagement["data-quality-check"]       = array("fas fa-check-square", "Qualitätsprüfung",       "/admin/data-quality-check");
+        
+        $trainerAccounting = array();
+        $trainerAccounting["trainer-administration"]   = array("fas fa-users",        "Übungsleiter verwalten",  "#");
+        $trainerAccounting["trainer-record-hours"]     = array("fas fa-edit",         "Stunden erfassen",        "#");
+        
+        
+        $this->menuitems = array();
+        if( count( $memberManagement ) > 0 ) {
+            $this->menuitems["headline-member-services"] = array(null, "MITGLIEDERVERWALTUNG", null);
+            $this->menuitems = array_merge($this->menuitems, $memberManagement);
+        }
+
+        if( count( $trainerAccounting ) > 0 ) {
+            $this->menuitems["trainer-accounting"] = array(null, "ÜBUNGSLEITERABRECHNUNG", null);
+            $this->menuitems = array_merge($this->menuitems, $trainerAccounting);
+        }
+      
     }
 }
 

@@ -22,7 +22,7 @@ class UserLoginHelper extends EasyvereinBase
             'query' => MemberUserInformation::easyvereinQueryString,
             'custom_field_name' => ConfigManager::getValue(ConfigKey::EASYVEREIN_CUSTOMFIELD_LOGINNAME),
             'custom_field_value' => $username,
-            'limit' => 1
+            'limit' => 2
         ];
 
         $res = $this->executeRestQuery('member', $queryParams);

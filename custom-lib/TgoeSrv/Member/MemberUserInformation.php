@@ -4,6 +4,7 @@ namespace TgoeSrv\Member;
 
 use TgoeSrv\Tools\ConfigManager;
 use TgoeSrv\Tools\ConfigKey;
+use TgoeSrv\Member\Enums\UserPermission;
 
 class MemberUserInformation implements \Stringable
 {
@@ -21,6 +22,8 @@ class MemberUserInformation implements \Stringable
     private string $privateEmail = '';
 
     private array $customFields = array();
+    
+    private array $permissionCheckCache = array();
 
     /**
      * @return string
@@ -112,12 +115,35 @@ class MemberUserInformation implements \Stringable
     }
     
     /**
-     * For security reasons it can be useful to clear senstitige information.
+     * For security reasons it can be useful to clear senstitive information.
      * E.g. when this object is stored in the session (which could be compromised).
      */
     public function clearLoginCustomFields() :void {
         unset($this->customFields[ConfigManager::getValue(ConfigKey::EASYVEREIN_CUSTOMFIELD_LOGINNAME)]);
         unset($this->customFields[ConfigManager::getValue(ConfigKey::EASYVEREIN_CUSTOMFIELD_PASSWORDHASH)]);
+    }
+    
+    public function hasPermission( UserPermission $p ) : bool {
+        if( !isset( $this->permissionCheckCache[$p->value]) ) {
+            $mappingConfigKey = UserPermission::getConfigKey($p);
+            
+            if( $mappingConfigKey !== null ) {
+                $permissionMappedName = ConfigManager::getValue($mappingConfigKey);
+            }
+            else $permissionMappedName = null;
+            
+            if( $permissionMappedName !== null ) {
+                $permissions = $this->getCustomField(ConfigManager::getValue(ConfigKey::EASYVEREIN_CUSTOMFIELD_PERMISSIONS));
+                
+                //check if requested permission is in list of given permissions
+                $r = in_array($permissionMappedName, $permissions);
+            }
+            else $r = false;
+            
+            $this->permissionCheckCache[$p->value] = $r;
+        }
+        
+        return $this->permissionCheckCache[$p->value];
     }
 }
 
