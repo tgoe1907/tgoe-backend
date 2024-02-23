@@ -1,9 +1,9 @@
 <?php
 namespace TgoeSrv\Member\Api;
 
+use TgoeSrv\Database\DbHelper;
+use TgoeSrv\Database\Entities\UserAccount;
 use TgoeSrv\Member\MemberUserInformation;
-use TgoeSrv\Tools\ConfigManager;
-use TgoeSrv\Tools\ConfigKey;
 use TgoeSrv\Tools\Logger;
 
 class UserLoginHelper extends EasyvereinBase
@@ -12,55 +12,62 @@ class UserLoginHelper extends EasyvereinBase
     /**
      * Tr to get user info by provided credentials. Return null in case login not matching.
      * 
-     * @param string $username
+     * @param string $email
      * @param string $password
      * @return MemberUserInformation|NULL
      */
-    public function verifyUserLogin(string $username, string $password): ?MemberUserInformation
+    public function verifyUserLogin(string $email, string $password): ?UserAccount
     {
-        $queryParams = [
-            'query' => MemberUserInformation::easyvereinQueryString,
-            'custom_field_name' => ConfigManager::getValue(ConfigKey::EASYVEREIN_CUSTOMFIELD_LOGINNAME),
-            'custom_field_value' => $username,
-            'limit' => 2
-        ];
-
-        $res = $this->executeRestQuery('member', $queryParams);
+        $em = DbHelper::getEntityManager();
+        
+        $qb = $em->createQueryBuilder()
+            ->select('ua')
+            ->from('TgoeSrv\Database\Entities\UserAccount', 'ua')
+            ->where('ua.email = :email')
+            ->setParameter('email', $email);
+        
+        $users = $qb->getQuery()->getResult();
 
         // make sure only one record matches the user name
-        if (empty($res['count'])) {
-            $cnt = intval($res['count']);
+        $cnt = intval($users);
 
-            if ($cnt == 0) {
-                Logger::info("Login failed for user '{$username}'. Username did not match any record.");
-                return null;
-            }
-
-            if ($cnt > 1) {
-                Logger::info("Login failed for user '{$username}'. Username matched multiple records.");
-                return null;
-            }
-        }
-
-        // parse result and create user information object
-        $userInfo = new MemberUserInformation($res['results'][0]);
-
-        // double-check user name (to make sure query by API does not do any relaxed matching)
-        if (strtolower($username) != strtolower($userInfo->getLoginUsername())) {
-            Logger::info("Double-check of user name for login '{$username}' failed.");
+        if ($cnt == 0) {
+            Logger::info("Login failed for user '{$email}'. Username did not match any record.");
             return null;
         }
 
+        if ($cnt > 1) {
+            Logger::info("Login failed for user '{$email}'. Username matched multiple records.");
+            return null;
+        }
+
+        /**
+         * 
+         * @var UserAccount $userAccount
+         */
+        $userAccount = $users[0];
+
         // check password
-        if (! password_verify($password, $userInfo->getLoginPasswordHash())) {
-            Logger::info("Password check for login '{$username}' failed.");
+        if (!password_verify($password, $userAccount->getPasswordHash())) {
+            Logger::info("Password check for login '{$email}' failed.");
+            
+            //increment failed login counter
+            Logger::info("Increment failed login count for '{$email}'.");
+            $userAccount->incrementFailedLoginCount();
+            $em->persist($userAccount);
+            $em->flush();
+            
             return null;
         }
         
-        //clear sensitive information from user info object for more safety
-        $userInfo->clearLoginCustomFields();
+        //after successfull login reset failed login counter and set last login timestamp
+        $userAccount->setFailedLoginCount(0);
+        $userAccount->setLastLoginNow();
+        $em->persist($userAccount);
+        $em->flush();
 
-        return $userInfo;
+ 
+        return $userAccount;
     }
 }
 

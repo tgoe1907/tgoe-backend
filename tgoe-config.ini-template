@@ -5,16 +5,17 @@
 ;  This file contains sensitive data (except template version of the file).
 ;  Put it at a safe place and never commit real secrets to a VCS.
 
+[db]
+host = localhost
+port = 3306
+dbname = tgoeapp
+user = tgoeapp_user
+password = secret_pass
+
 [easyverein]
 ;This section contains configuration values related to club management application EasyVerein (http://www.easyverein.com)
 apikey = ABCDEFGHIJKLMNOPQRSTUVWXYZ
 serviceurl = https://hexa.easyverein.com/api/v1.7/
-customfield_loginname = Anmeldename
-customfield_passwordhash = Passwort Hash
-customfield_permissions = Berechtigungen
-permission_dataqualitycheck = Qualitätsprüfung
-permission_divisionstatistics = Abteilungs-Statistik
-permission_memberdataconfirmation = Listen Sportgruppen
 
 [aspose]
 ;This section contains configuration for usage of document processing services at https://www.aspose.cloud/

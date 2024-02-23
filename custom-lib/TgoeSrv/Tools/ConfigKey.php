@@ -2,17 +2,20 @@
 declare(strict_types = 1);
 namespace TgoeSrv\Tools;
 
-//TODO: performance for getting the values? better solution?
 enum ConfigKey : string
 {
+    //DB
+    case DB_HOST = 'db|host';
+    case DB_PORT = 'db|port';
+    case DB_DBNAME = 'db|dbname';
+    case DB_USER = 'db|user';
+    case DB_PASSWORD = 'db|password';
+    
+    //EASYVEREIN
     case EASYVEREIN_APIKEY = 'easyverein|apikey';
     case EASYVEREIN_SERVICEURL = 'easyverein|serviceurl';
-    case EASYVEREIN_CUSTOMFIELD_LOGINNAME = 'easyverein|customfield_loginname';
-    case EASYVEREIN_CUSTOMFIELD_PASSWORDHASH = 'easyverein|customfield_passwordhash';
-    case EASYVEREIN_CUSTOMFIELD_PERMISSIONS = 'easyverein|customfield_permissions';
-    case EASYVEREIN_PERMISSION_DATAQUALITYCHECK = 'easyverein|permission_dataqualitycheck';
-    case EASYVEREIN_PERMISSION_DIVISIONSTATISTICS = 'easyverein|permission_divisionstatistics';
-    case EASYVEREIN_PERMISSION_MEMBERDATACONFIRMATION = 'easyverein|permission_memberdataconfirmation';
+    
+    //ASPOSE
     case ASPOSE_CLIENTID = 'aspose|clientid';
     case ASPOSE_CLIENTSECRET = 'aspose|clientsecret';
     
