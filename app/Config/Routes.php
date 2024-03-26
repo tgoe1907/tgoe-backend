@@ -16,11 +16,15 @@ $routes = Services::routes();
 $routes->get('/', 'Home::index');
 $routes->post('/', 'Home::index');
 $routes->get('/logout', 'Home::logout');
+
 $routes->get('/admin/member-data-confirmation', 'Admin\MemberDataConfirmation::index');
 $routes->get('/admin/member-data-confirmation/refresh', 'Admin\MemberDataConfirmation::refreshCache');
 $routes->get('/admin/member-data-confirmation/downloadlist/(:segment)/(:segment)', 'Admin\MemberDataConfirmation::downloadList/$1/$2');
 $routes->get('/admin/data-quality-check', 'Admin\DataQualityCheck::index');
 $routes->get('/admin/division-statistics', 'Admin\DivisionStatistics::index');
+
+$routes->get('/account/passwd', 'Account\Passwd::index');
+$routes->post('/account/passwd', 'Account\Passwd::index');
 
 /*
  * --------------------------------------------------------------------

@@ -123,7 +123,9 @@ class CIHelper
             $this->menuitems["trainer-accounting"] = array(null, "ÜBUNGSLEITERABRECHNUNG", null);
             $this->menuitems = array_merge($this->menuitems, $trainerAccounting);
         }
-      
+        
+        $this->menuitems["account-management"] = array(null,           "MEIN KONTO", null);     
+        $this->menuitems["account-passwd"]   = array("fas fa-key",  "Passwort ändern",   "/account/passwd");
     }
 }
 
