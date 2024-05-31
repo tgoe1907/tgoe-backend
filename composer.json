@@ -5,7 +5,7 @@
 		"aspose-cloud/aspose-words-cloud" : "23.*.*",
 		"doctrine/orm" : "3.*.*",
 		"doctrine/dbal" : "4.*.*",
-		"symfony/cache": "^7.0"
+		"symfony/cache": "6.4.*"
 	},
 	"autoload" : {
 		"psr-4" : {
