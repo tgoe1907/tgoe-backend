@@ -4,6 +4,9 @@ namespace TgoeSrv\Tools;
 
 enum ConfigKey : string
 {
+    //AUTH
+    case AUTH_DEVELOPMENTLOGINAS = 'auth|development-login-as';
+    
     //DB
     case DB_HOST = 'db|host';
     case DB_PORT = 'db|port';

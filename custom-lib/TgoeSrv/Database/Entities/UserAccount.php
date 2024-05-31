@@ -19,36 +19,12 @@ class UserAccount
     #[Column(name: 'email', length: 50)]
     private string $email;
     
-    #[Column(name: 'password_hash', length: 100)]
-    private string $passwordHash;
-    
-    #[Column(name: 'failed_login_count')]
-    private int $failedLoginCount;
-    
     #[Column(name: 'first_name', length: 50)]
     private string $firstName;
     
     #[Column(name: 'family_name', length: 50)]
     private string $familyName;
     
-    #[Column(name: 'last_login')]
-    private ?\DateTime $lastLogin;
-    
-    /**
-     * @return \DateTime
-     */
-    public function getLastLogin()
-    {
-        return clone $this->lastLogin;
-    }
-
-    /**
-     */
-    public function setLastLoginNow()
-    {
-        $this->lastLogin = new \DateTime();
-    }
-
     /**
      * @return number
      */
@@ -63,22 +39,6 @@ class UserAccount
     public function getEmail()
     {
         return $this->email;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPasswordHash()
-    {
-        return $this->passwordHash;
-    }
-
-    /**
-     * @return number
-     */
-    public function getFailedLoginCount()
-    {
-        return $this->failedLoginCount;
     }
 
     /**
@@ -111,29 +71,6 @@ class UserAccount
     public function setEmail($email)
     {
         $this->email = $email;
-    }
-
-    /**
-     * @param string $passwordHash
-     */
-    public function setPasswordHash($passwordHash)
-    {
-        $this->passwordHash = $passwordHash;
-    }
-
-    /**
-     * @param number $failedLoginCount
-     */
-    public function setFailedLoginCount($failedLoginCount)
-    {
-        $this->failedLoginCount = $failedLoginCount;
-    }
-    
-    /**
-     */
-    public function incrementFailedLoginCount()
-    {
-        $this->failedLoginCount++;
     }
 
     /**
