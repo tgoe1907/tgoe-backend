@@ -12,5 +12,10 @@
 			"TgoeSrv\\" : "custom-lib/TgoeSrv"
 		}
 	},
-	"name" : "tgoe/tgoe-backend-php"
+	"name" : "tgoe/tgoe-backend-php",
+	"config": {
+		"platform": {
+			"php": "8.1.2"
+		}
+	}
 }
