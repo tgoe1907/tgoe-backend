@@ -70,14 +70,16 @@ This application is based on some frameworks to reduce individual code and get a
 * Consolidate idea of app configuration with CodeIgnitor. Goal is having a central place for all coniguration and no environment related configuration is contained in checked-in code. Maybe integrate content of 'tgoe-config.ini' with Code Igniter's '.env' file (if possible).
 * additional member validators
 	* user name = membership number (except for administator users)
-	* custom user name for services app = user name?
 	* when using bank debit, check for all fields filled (e.g. mandate date)
 * Security
+	* Lock account after too many wrong logins
+	* Change password feature
+	* Self-service account creation (with email and mobile number validation)
+	* 2FA by email or SMS to mobile ? (e.g. https://www.smsapi.com/en/sms-pricing)
 	* Implement access control system, so we can unlock certain features on user level.
 	* Implement parameterized roles, e.g. for assigning a trainer to his sports groups.
 	* Implement brute force protection, e.g. lock user after 3 failed login attempts.
 * Document creation services
-	* create list for trainers to regularly check member's data
 	* create welcome letters for new members
 	* create cancellation confirmation letters
 * Letter services

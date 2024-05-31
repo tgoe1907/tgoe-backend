@@ -12,7 +12,7 @@
   <form method='POST' action='/'>
     <div class="card-body">
       <div class="form-group">
-        <label for="loginform-usr">Benutzername</label>
+        <label for="loginform-usr">E-Mail</label>
         <input type="text" class="form-control" id="loginform-usr" name="loginform-usr" placeholder="Benutzername eingeben">
       </div>
       <div class="form-group">

@@ -55,7 +55,7 @@ use App\Libraries\CIHelper;
               <img src="/img/loggedin-avatar.png" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-              <a href="/logout"><?= esc(session()->get('userdata')->getFullName())?> <i class="nav-icon fas fa-sign-out-alt"></i></a>
+              <a href="#"><?= esc(session()->get('userdata')->getFullName())?></a>
             </div>
           </div>
           <?php 

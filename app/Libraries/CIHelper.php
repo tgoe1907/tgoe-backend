@@ -123,7 +123,6 @@ class CIHelper
             $this->menuitems["trainer-accounting"] = array(null, "ÜBUNGSLEITERABRECHNUNG", null);
             $this->menuitems = array_merge($this->menuitems, $trainerAccounting);
         }
-      
     }
 }
 

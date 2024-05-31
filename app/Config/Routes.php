@@ -15,7 +15,7 @@ $routes = Services::routes();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 $routes->post('/', 'Home::index');
-$routes->get('/logout', 'Home::logout');
+
 $routes->get('/admin/member-data-confirmation', 'Admin\MemberDataConfirmation::index');
 $routes->get('/admin/member-data-confirmation/refresh', 'Admin\MemberDataConfirmation::refreshCache');
 $routes->get('/admin/member-data-confirmation/downloadlist/(:segment)/(:segment)', 'Admin\MemberDataConfirmation::downloadList/$1/$2');
