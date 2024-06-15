@@ -4,6 +4,8 @@ namespace TgoeSrv\Member\Api;
 
 use TgoeSrv\Tools\ConfigManager;
 use TgoeSrv\Tools\ConfigKey;
+use TgoeSrv\Tools\SettingsKey;
+use TgoeSrv\Tools\SettingsManager;
 use GuzzleHttp\Client;
 use TgoeSrv\Tools\Logger;
 
@@ -50,13 +52,13 @@ abstract class EasyvereinBase
     protected function executeRestQuery(string $function, array $queryParams) : array
     {
         $evUrl = ConfigManager::getValue(ConfigKey::EASYVEREIN_SERVICEURL);
-        $evAuth = ConfigManager::getValue(ConfigKey::EASYVEREIN_APIKEY);
+        $evAuth = SettingsManager::getStringValue(SettingsKey::EASYVEREIN_BEARER_TOKEN);
 
         // https://docs.guzzlephp.org/en/stable/request-options.html
         $requestOptions = [
             'headers' => [
                 'Accept' => 'application/json',
-                'Authorization' => 'Token ' . $evAuth
+                'Authorization' => 'Bearer ' . $evAuth
             ],
             'query' => $queryParams
         ];

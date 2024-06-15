@@ -112,6 +112,9 @@ class CIHelper
         $trainerAccounting["trainer-administration"]   = array("fas fa-users",        "Übungsleiter verwalten",  "#");
         $trainerAccounting["trainer-record-hours"]     = array("fas fa-edit",         "Stunden erfassen",        "#");
         
+        $admin = array();
+        $admin["settings"] = array("fas fa-cog",        "Einstellungen",  "#");
+        
         
         $this->menuitems = array();
         if( count( $memberManagement ) > 0 ) {
@@ -122,6 +125,11 @@ class CIHelper
         if( count( $trainerAccounting ) > 0 ) {
             $this->menuitems["trainer-accounting"] = array(null, "ÜBUNGSLEITERABRECHNUNG", null);
             $this->menuitems = array_merge($this->menuitems, $trainerAccounting);
+        }
+        
+        if( count( $admin ) > 0 ) {
+            $this->menuitems["admin"] = array(null, "ADMINISTRATION", null);
+            $this->menuitems = array_merge($this->menuitems, $admin);
         }
     }
 }

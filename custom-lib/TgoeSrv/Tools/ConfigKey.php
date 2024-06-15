@@ -16,7 +16,6 @@ enum ConfigKey : string
     case DB_PASSWORD = 'db|password';
     
     //EASYVEREIN
-    case EASYVEREIN_APIKEY = 'easyverein|apikey';
     case EASYVEREIN_SERVICEURL = 'easyverein|serviceurl';
     
     //ASPOSE

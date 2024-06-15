@@ -19,7 +19,6 @@ password = secret_pass
 
 [easyverein]
 ;This section contains configuration values related to club management application EasyVerein (http://www.easyverein.com)
-apikey = ABCDEFGHIJKLMNOPQRSTUVWXYZ
 serviceurl = https://hexa.easyverein.com/api/v1.7/
 
 [aspose]
