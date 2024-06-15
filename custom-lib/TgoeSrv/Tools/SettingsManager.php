@@ -3,6 +3,8 @@ declare(strict_types = 1);
 namespace TgoeSrv\Tools;
 
 use TgoeSrv\Database\DAO\SettingsDAO;
+use TgoeSrv\Database\Entities\Settings;
+use TgoeSrv\Database\DbHelper;
 
 class SettingsManager
 {
@@ -30,6 +32,20 @@ class SettingsManager
         return $this->settings[$key->value]->getStringValue();
     }
     
+    private function setStringValueInternal(SettingsKey $key, string $stringValue )
+    {
+        if (! isset($this->settings[$key->value])) {
+            throw new \Exception('Cannot find settings value for key=' . $key->value );
+        }
+        
+        /**
+         * 
+         * @var Settings $obj
+         */
+        $obj = $this->settings[$key->value];
+        $obj->setStringValue($stringValue);
+        DbHelper::getEntityManager()->flush();
+    }
     
     
     private static function getInstance(): SettingsManager
@@ -44,6 +60,12 @@ class SettingsManager
     public static function getStringValue(SettingsKey $key): string
     {
         return self::getInstance()->getStringValueInternal($key);
+    }
+    
+    
+    public static function setStringValue(SettingsKey $key, string $stringValue )
+    {
+        setStringValueInternal($key, $stringValue);
     }
 }
 

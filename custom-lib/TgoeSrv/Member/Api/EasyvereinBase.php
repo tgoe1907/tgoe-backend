@@ -49,7 +49,7 @@ abstract class EasyvereinBase
      * @param string $function
      * @param array $queryParams
      */
-    protected function executeRestQuery(string $function, array $queryParams) : array
+    protected function executeRestQuery(string $function, array $queryParams = array()) : array
     {
         $evUrl = ConfigManager::getValue(ConfigKey::EASYVEREIN_SERVICEURL);
         $evAuth = SettingsManager::getStringValue(SettingsKey::EASYVEREIN_BEARER_TOKEN);
@@ -74,6 +74,16 @@ abstract class EasyvereinBase
             Logger::error(__METHOD__.' '.$msg);
             Logger::info(__METHOD__.' Response body = '.$response->getBody());
             throw new \Exception($msg);
+        }
+        
+        //in case refresh of token is requested, perform refresh operation
+        if( $function != 'refresh-token' ) {
+            $trnHeader = $response->getHeader('tokenRefreshNeeded');
+            if( count($trnHeader) > 0 && strtolower($trnHeader[0]) == 'true' ) {
+                Logger::info(__METHOD__.' API returned request to refresh bearer token.');
+                $bts = new BearerTokenService();
+                $bts->updateBearerTokenInSettings();
+            }
         }
         
         $json = $response->getBody()->getContents();

@@ -36,7 +36,7 @@ class UserAccountDAO {
             Logger::info("E-Mail '{$email}' matches many records. Do not accept.");
             return null;
         }
-        
+
         /**
          *
          * @var UserAccount $userAccount
