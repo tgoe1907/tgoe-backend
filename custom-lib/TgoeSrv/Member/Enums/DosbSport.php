@@ -8,21 +8,21 @@ enum DosbSport: string
 
     case UNKNOWN = 'XX|unbekannt';
 
-    case JUDO = 'B16|Judo';
+    case JUDO = 'B19|Judo';
 
-    case GYMNASTICS = 'B36|Turnen';
+    case GYMNASTICS = 'B41|Turnen';
 
-    case ATHLETICS = 'B18|Leichtathletik';
+    case ATHLETICS = 'B22|Leichtathletik';
 
-    case CYCLING = 'B20|Radsport';
+    case CYCLING = 'B24|Radsport';
 
-    case LAWN_SPORTS = 'C21|Rasenkraftsport';
+    case LAWN_SPORTS = 'C19|Rasenkraftsport';
 
-    case SKI = 'B29|Ski';
+    case SKI = 'B33|Ski';
 
-    case VOLLEYBALL = 'B37|Volleyball';
+    case VOLLEYBALL = 'B42|Volleyball';
 
-    case DISABLED_SPORTS = 'C04|Behindertensport';
+    case DISABLED_SPORTS = 'C02|Behindertensport';
 
     public function getKey(): string
     {
