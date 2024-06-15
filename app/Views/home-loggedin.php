@@ -5,6 +5,7 @@
 </div>
 
 <div class="col-md-6">
+	
 	<div class="card card-primary">
         <?php 
         $isFirstHeadline = true;

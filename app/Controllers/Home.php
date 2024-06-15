@@ -20,10 +20,13 @@ class Home extends BaseController
         $user = session()->get('userdata');
         if( $user === null ) {
             // try to get user from environment variable
-            $email = getenv('SSO_LOGIN_USERNAME');
+            $email = getenv(ConfigManager::getValue(ConfigKey::AUTH_SSO_ENV_VAR_NAME));
             if( strlen ($email) == 0 ) {
                 //if no environment variable provided, check for development mode user
                 $email = ConfigManager::getValue(ConfigKey::AUTH_DEVELOPMENTLOGINAS);
+                if( strlen ($email) > 0 ) {
+                    $ci->addMessage('DEVELOPMENT MODE', 'Login als '.$email.' ohne Berechtigungprüfung. Nur für Testzwecke, nicht auf produktiven Umgebungen verwenden!', CIHelper::MSG_ERROR);
+                }
             }
             
             // try to find user

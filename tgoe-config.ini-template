@@ -8,6 +8,7 @@
 [auth]
 ;"development-login-as" option will login a user without checking any credentials. Only use in your development environment. Must be set empty on production.
 development-login-as = 
+sso-env-var-name = OIDC_CLAIM_email
 
 [db]
 host = localhost

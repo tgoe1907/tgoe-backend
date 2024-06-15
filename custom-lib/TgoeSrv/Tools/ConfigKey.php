@@ -6,6 +6,7 @@ enum ConfigKey : string
 {
     //AUTH
     case AUTH_DEVELOPMENTLOGINAS = 'auth|development-login-as';
+    case AUTH_SSO_ENV_VAR_NAME = 'auth|sso-env-var-name';
     
     //DB
     case DB_HOST = 'db|host';
