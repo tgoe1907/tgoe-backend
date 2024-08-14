@@ -65,7 +65,7 @@ class SettingsManager
     
     public static function setStringValue(SettingsKey $key, string $stringValue )
     {
-        setStringValueInternal($key, $stringValue);
+        self::getInstance()->setStringValueInternal($key, $stringValue);
     }
 }
 

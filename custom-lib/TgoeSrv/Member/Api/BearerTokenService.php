@@ -2,6 +2,7 @@
 declare(strict_types = 1);
 namespace TgoeSrv\Member\Api;
 
+use TgoeSrv\Tools\Logger;
 use TgoeSrv\Tools\SettingsManager;
 use TgoeSrv\Tools\SettingsKey;
 
