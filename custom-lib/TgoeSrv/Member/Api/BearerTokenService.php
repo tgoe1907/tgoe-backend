@@ -14,7 +14,7 @@ class BearerTokenService extends EasyvereinBase
      */
     public function fetchRefreshToken() :string {
         $resultList = $this->executeRestQuery('refresh-token');
-        return $resultList[0]['Bearer'];
+        return $resultList['Bearer'];
     }
     
     /**

@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping\Id;
 class Settings
 {
     #[Id]
-    #[Column(name: 'key', unique: true, length: 50)]
+    #[Column(name: 'key_name', unique: true, length: 50)]
     private string $key;
     
     #[Column(name: 'string_value', length: 255)]
