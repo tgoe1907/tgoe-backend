@@ -2,7 +2,6 @@
 declare(strict_types = 1);
 namespace TgoeSrv\Member;
 
-use TgoeSrv\Member\Enums\DosbSport;
 use TgoeSrv\Member\Enums\MemberGroupCustomProperty;
 
 class MemberGroup implements \Stringable
@@ -97,34 +96,12 @@ class MemberGroup implements \Stringable
                 $prop = MemberGroupCustomProperty::findByKey(trim($parts[0]));
                 if (isset($prop)) {
                     $value = count($parts) > 1 ? $parts[1] : '';
-                    $this->customPropertyCache[$prop->value] = $value;
+                    $this->customPropertyCache[$prop->value] = trim($value);
                 }
             }
         }
 
         return isset($this->customPropertyCache[$memberGroupCustomProperty->value]) ? $this->customPropertyCache[$memberGroupCustomProperty->value] : null;
-    }
-
-    /**
-     * Returns DOSB sport custom property converted to enumeration.
-     * Returns null in case no value provided or shorter than 3 chars.
-     * Returns UNKNOWN value in case key not implemented in enumeration.
-     * String value must start by 3 character key in order to find enumeration value.
-     *
-     * @return DosbSport
-     */
-    public function getDosbSportCustomProperty(): ?DosbSport
-    {
-        $stringValue = $this->getCustomProperty(MemberGroupCustomProperty::DOSB_SPORT);
-        if (! isset($stringValue))
-            return null;
-
-        $stringValue = trim($stringValue);
-        if (strlen($stringValue) < 3)
-            return null;
-
-        $dosbSport = DosbSport::findByKey(substr($stringValue, 0, 3));
-        return isset($dosbSport) ? $dosbSport : DosbSport::UNKNOWN;
     }
 
     /**

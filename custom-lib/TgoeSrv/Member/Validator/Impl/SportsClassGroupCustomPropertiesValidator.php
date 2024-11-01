@@ -6,10 +6,11 @@ use TgoeSrv\Member\Validator\MemberGroupValidator;
 use TgoeSrv\Member\MemberGroup;
 use TgoeSrv\Member\Enums\MemberGroupCustomProperty;
 use TgoeSrv\Member\Enums\ValidationSeverity;
-use TgoeSrv\Member\Enums\DosbSport;
 
 class SportsClassGroupCustomPropertiesValidator extends MemberGroupValidator
 {
+    private static $knownSports = array('Judo', 'Turnen', 'Leichtathletik', 'Radsport', 'Rasenkraftsport', 'Ski', 'Volleyball', 'Behindertensport');
+    
     private static $mandatoryProperties = [
         MemberGroupCustomProperty::TRAINER,
         MemberGroupCustomProperty::LOCATION,
@@ -50,7 +51,7 @@ class SportsClassGroupCustomPropertiesValidator extends MemberGroupValidator
 
         // check for valid value of DOSB sport property
         $v = $memberGroup->getCustomProperty(MemberGroupCustomProperty::DOSB_SPORT);
-        if( $v !== null && $v == DosbSport::UNKNOWN ) {
+        if( !in_array($v, self::$knownSports)) {
             $this->addMessage(ValidationSeverity::ERROR, $memberGroup, "Der angegebene Wert von {$p->value} kann keiner bekannten Sportart zugeordnet werden.");
         }
         

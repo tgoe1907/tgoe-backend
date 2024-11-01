@@ -15,7 +15,7 @@ enum MemberGroupCustomProperty : string
      * Find enum value matching the key. Uses ignore case string comparison.
      *
      * @param string $key Key to search for.
-     * @return DosbSport Enumeration value or NULL in case key does not exist.
+     * @return MemberGroupCustomProperty Enumeration value or NULL in case key does not exist.
      */
     public static function findByKey(string $key): ?MemberGroupCustomProperty
     {

@@ -6,7 +6,6 @@ use TgoeSrv\Member\Validator\SingleMemberValidator;
 use TgoeSrv\Member\Member;
 use TgoeSrv\Member\Enums\MemberDosbGender;
 use TgoeSrv\Member\Enums\ValidationSeverity;
-use TgoeSrv\Member\Enums\DosbSport;
 
 class MemberSalutationValidator extends SingleMemberValidator
 {

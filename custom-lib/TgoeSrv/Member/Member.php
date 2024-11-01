@@ -3,7 +3,6 @@ declare(strict_types = 1);
 namespace TgoeSrv\Member;
 
 use TgoeSrv\Member\Enums\MemberDosbGender;
-use TgoeSrv\Member\Enums\DosbSport;
 
 class Member implements \Stringable
 {
@@ -87,13 +86,8 @@ class Member implements \Stringable
             $this->dosbGender = MemberDosbGender::findByKey($arr['integrationDosbGender']);
 
             foreach ($arr['integrationDosbSport'] as $sportData) {
-                $sportString = $sportData['title'];
-                $sportString = strval($sportString);
-                if (strlen($sportString) >= 3) {
-                    $sport = DosbSport::findByKey(substr($sportString, 0, 3));
-                    if (isset($sport))
-                        $this->dosbSport[$sport->getKey()] = $sport;
-                }
+                $sportString = explode(' ', strval($sportData['title']));
+                if( count( $sportString) > 1 ) $this->dosbSport[] = $sportString[1];
             }
             
             foreach ($arr['relatedMembers'] as $relMember) {

@@ -18,7 +18,7 @@ enum MemberDosbGender: string
      *
      * @param string $key
      *            Key to search for.
-     * @return DosbSport Enumeration value or UNKNOWN in case key does not exist.
+     * @return MemberDosbGender Enumeration value or UNKNOWN in case key does not exist.
      */
     public static function findByKey(?string $key): ?MemberDosbGender
     {
