@@ -21,6 +21,8 @@ $routes->get('/admin/member-data-confirmation/refresh', 'Admin\MemberDataConfirm
 $routes->get('/admin/member-data-confirmation/downloadlist/(:segment)/(:segment)', 'Admin\MemberDataConfirmation::downloadList/$1/$2');
 $routes->get('/admin/data-quality-check', 'Admin\DataQualityCheck::index');
 $routes->get('/admin/division-statistics', 'Admin\DivisionStatistics::index');
+$routes->get('/admin/yearbook-recipients', 'Admin\YearbookRecipients::index');
+$routes->get('/admin/yearbook-recipients/download', 'Admin\YearbookRecipients::download');
 
 /*
  * --------------------------------------------------------------------
