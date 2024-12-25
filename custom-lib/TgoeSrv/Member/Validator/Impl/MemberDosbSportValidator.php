@@ -48,7 +48,7 @@ class MemberDosbSportValidator extends SingleMemberValidator
         if (count($groups) > 0) {
             foreach ($groups as $g) {
                 $s = $g->getCustomProperty(MemberGroupCustomProperty::DOSB_SPORT);
-                if( $s !== null && strlen($s) > 0 ) $sportsOfGroups[] = $s;
+                if( $s !== null && strlen($s) > 0 && $s != "neutral" ) $sportsOfGroups[] = $s;
             }
         }
 

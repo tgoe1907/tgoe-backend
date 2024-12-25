@@ -7,7 +7,7 @@ use TgoeSrv\Member\Enums\MemberDosbGender;
 class Member implements \Stringable
 {
 
-    public const easyvereinQueryString = '{id,membershipNumber,joinDate,resignationDate,emailOrUserName,_isChairman,contactDetails{salutation,firstName,familyName,dateOfBirth,street,city,zip,privateEmail},memberGroups{memberGroup' . MemberGroup::easyvereinQueryString . '},integrationDosbSport{title},integrationDosbGender,relatedMembers{membershipNumber},_relatedMember{membershipNumber}}';
+    public const easyvereinQueryString = '{id,membershipNumber,joinDate,resignationDate,emailOrUserName,_isChairman,contactDetails{salutation,firstName,familyName,dateOfBirth,street,city,zip,privateEmail,iban},memberGroups{memberGroup' . MemberGroup::easyvereinQueryString . '},integrationDosbSport{title},integrationDosbGender,relatedMembers{membershipNumber},_relatedMember{membershipNumber}}';
 
     public const easyvereinDefaultOrder = "contactDetails__familyName,contactDetails__firstName";
 
@@ -38,6 +38,8 @@ class Member implements \Stringable
     private string $zip = '';
 
     private string $privateEmail = '';
+    
+    private string $iban = '';
 
     private MemberDosbGender $dosbGender = MemberDosbGender::UNKNOWN;
 
@@ -65,6 +67,7 @@ class Member implements \Stringable
             $this->zip = $arr['contactDetails']['zip'];
             $this->privateEmail = $arr['contactDetails']['privateEmail'];
             $this->salutation = $arr['contactDetails']['salutation'];
+            $this->iban = $arr['contactDetails']['iban'];
 
             if (is_array($arr['memberGroups']))
             {
@@ -230,7 +233,25 @@ class Member implements \Stringable
     {
         return $this->privateEmail;
     }
-
+    
+    /**
+     *
+     * @return string
+     */
+    public function getIban()
+    {
+        return $this->iban;
+    }
+    
+    /**
+     * Clean IBAN string. Remove spaces/tabs and convert to upper case.
+     * @return string
+     */
+    public function getIbanUnified()
+    {
+        return str_replace(array(' ', "\t"), '', strtoupper($this->iban));
+    }
+    
     /**
      *
      * @return \TgoeSrv\Member\Enums\MemberDosbGender
