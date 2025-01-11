@@ -107,7 +107,7 @@ class CIHelper
         $memberManagement["member-data-confirmation"] = array("far fa-list-alt",     "Listen Sportgruppen",     "/admin/member-data-confirmation");
         $memberManagement["division-statistics"]      = array("fa fa-chart-line",    "Abteilungs-Statistik",    "/admin/division-statistics");
         $memberManagement["data-quality-check"]       = array("fas fa-check-square", "Qualitätsprüfung",        "/admin/data-quality-check");
-        $memberManagement["yearbook-recipients"]      = array("far fa-list-alt",     "Jahrbuch-Empfängerliste", "/admin/yearbook-recipients");
+        $memberManagement["export-lists"]             = array("far fa-list-alt",     "Listen exportieren",      "/admin/export-lists");
         
         $trainerAccounting = array();
         $trainerAccounting["trainer-administration"]   = array("fas fa-users",        "Übungsleiter verwalten",  "#");

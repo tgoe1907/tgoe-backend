@@ -21,9 +21,10 @@ $routes->get('/admin/member-data-confirmation/refresh', 'Admin\MemberDataConfirm
 $routes->get('/admin/member-data-confirmation/downloadlist/(:segment)/(:segment)', 'Admin\MemberDataConfirmation::downloadList/$1/$2');
 $routes->get('/admin/data-quality-check', 'Admin\DataQualityCheck::index');
 $routes->get('/admin/division-statistics', 'Admin\DivisionStatistics::index');
-$routes->get('/admin/yearbook-recipients', 'Admin\YearbookRecipients::index');
-$routes->get('/admin/yearbook-recipients/download', 'Admin\YearbookRecipients::download');
-
+$routes->get('/admin/export-lists', 'Admin\ExportLists::index');
+$routes->get('/admin/export-lists/yearbook-recipients', 'Admin\ExportLists::yearbookRecipients');
+$routes->get('/admin/export-lists/birthday/(:segment)/(:segment)', 'Admin\ExportLists::birthday/$1/$2');
+$routes->get('/admin/export-lists/jubilee/(:segment)/(:segment)', 'Admin\ExportLists::jubilee/$1/$2');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

@@ -8,8 +8,9 @@ use TgoeSrv\Member\Api\MemberService;
 use TgoeSrv\Member\MemberGroup;
 use App\Libraries\CIHelper;
 use TgoeSrv\Member\Member;
+use TgoeSrv\Tools\CSVTool;
 
-class YearbookRecipients extends BaseController
+class ExportLists extends BaseController
 {
 
     public function index()
@@ -17,10 +18,115 @@ class YearbookRecipients extends BaseController
         $ci = new CIHelper();
         $ci->setHeadline("Empfängerliste Jahrbuch erzeugen");
         $ci->initMenuLoggedin();
-        return $ci->view('admin/yearbook-recipients/home');
+        return $ci->view('admin/export-lists/home');
+    }
+    
+    public function birthday( $year, $birthdays = '') {
+        $year = intval( $year );
+        if( $year < 2000 ) $year = date('Y');
+        $referencetimestamp = mktime(23,59,59,12,31,$year);
+        
+        $birthdays = explode(',', $birthdays);
+        array_walk($birthdays, 'intval');
+        
+        //get all members
+        $srvM = new MemberService();
+        $members = $srvM->getAllMembers();
+        
+        $list = array();
+        foreach ($members as $m) {
+            $age = $m->getAge($referencetimestamp);
+            
+            //in case only special birthdays should be exported
+            if( count($birthdays) > 0) { 
+                if( !in_array($age, $birthdays)) continue; //skip if not needed
+            }
+            
+            //add to result list and use birthday as key to sort easily
+            $key = date('m-d', $m->getDateOfBirth()).'-'.$m->getMembershipNumber();
+            $list[$key] = $m;
+        }
+        
+        unset($members);
+        
+        // sort list by key
+        ksort($list);
+        
+        //prepare export data
+        $exportdata=array();
+        foreach ($list as $m) {
+            $data = array();
+            $data['Name'] = $m->getFullName();
+            $data['Straße'] = $m->getStreet();
+            $data['PLZ_Ort'] = $m->getZip().' '.$m->getCity();
+            $data['Mitgliedsnummer'] = $m->getMembershipNumber();
+            $data['Geburtstag'] = date('d.m.Y', $m->getDateOfBirth());
+            $data['Alter in '.$year] = $m->getAge($referencetimestamp);
+            
+            $exportdata[] = $data;
+        }
+        
+        unset($list);
+
+        $filedata = CSVTool::hasmap2csv($exportdata);
+        $filename = date('Y-m-d_H-i') . "_Geburtstagsliste_für_Jahr_{$year}.csv";
+        
+        return $this->response->download($filename, $filedata)->setFileName($filename);
+    }
+    
+    public function jubilee( $year, $jubilees = '' ) {
+        $year = intval( $year );
+        if( $year < 2000 ) $year = date('Y');
+        $referencetimestamp = mktime(23,59,59,12,31,$year);
+        
+        $jubilees = explode(',', $jubilees);
+        array_walk($jubilees, 'intval');
+        
+        //get all members
+        $srvM = new MemberService();
+        $members = $srvM->getAllMembers();
+        
+        $list = array();
+        foreach ($members as $m) {
+            $age = $m->getMembershipYears($referencetimestamp);
+            
+            //in case only special birthdays should be exported
+            if( count($jubilees) > 0) {
+                if( !in_array($age, $jubilees)) continue; //skip if not needed
+            }
+            
+            //add to result list and use jubilee age to sort easily
+            $key = $age.'-'.$m->getMembershipNumber();
+            $list[$key] = $m;
+        }
+        
+        unset($members);
+        
+        // sort list by key
+        ksort($list);
+        
+        //prepare export data
+        $exportdata=array();
+        foreach ($list as $m) {
+            $data = array();
+            $data['Name'] = $m->getFullName();
+            $data['Straße'] = $m->getStreet();
+            $data['PLZ_Ort'] = $m->getZip().' '.$m->getCity();
+            $data['Mitgliedsnummer'] = $m->getMembershipNumber();
+            $data['Jubiläum in '.$year] = $m->getMembershipYears($referencetimestamp);
+            
+            $exportdata[] = $data;
+        }
+        
+        unset($list);
+        
+        $filedata = CSVTool::hasmap2csv($exportdata);
+        $filename = date('Y-m-d_H-i') . "_Jubiläumsliste_für_Jahr_{$year}.csv";
+        
+        return $this->response->download($filename, $filedata)->setFileName($filename);
     }
 
-    public function download()
+    public function yearbookRecipients()
     {
         $srvM = new MemberService();
         $membersRaw = $srvM->getAllMembers();
@@ -124,27 +230,9 @@ class YearbookRecipients extends BaseController
             $exportdata[] = $data;
         }
         
-        //build csv data
-        $filedata = "";
-        for( $i = 0; $i<count($exportdata); $i++) {
-            $data = $exportdata[$i];
-            
-            if( $i == 0) {
-                $keys = array_keys($data);
-                $filedata .= implode(';', $keys)."\r\n";
-            }
-            
-            //quote the values
-            $values = array();
-            foreach( $keys as $k ) {
-                $values[$k] = '"'.str_replace('"', '""', $data[$k]).'"';
-            }
-            
-            $filedata .= implode(';', $values)."\r\n";
-        }
-        
+        $filedata = CSVTool::hasmap2csv($exportdata);
         $filename = date('Y-m-d_H-i') . '_Export-Jahrbuch-Empfänger.csv';
-
+        
         return $this->response->download($filename, $filedata)->setFileName($filename);
     }
 

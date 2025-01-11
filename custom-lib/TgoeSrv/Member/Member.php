@@ -331,6 +331,23 @@ class Member implements \Stringable
     }
     
     /**
+     * Calculate number of membership years. 
+     *
+     * @param ?int $referenceDate Reference date for calculation. If not set, value on current day is calculated.
+     * @return int
+     */
+    public function getMembershipYears( ?int $referenceDate = null ) : int
+    {
+        if( $this->getJoinDate() === null ) return 0;
+        if( $referenceDate === null ) $referenceDate = time();
+        
+        //calculate by year only
+        $years = intval(date('Y', $referenceDate)) - intval(date('Y', $this->getJoinDate()));
+        
+        return $years;
+    }
+    
+    /**
      * Check is member is below 18 years old.
      * 
      * @return bool
