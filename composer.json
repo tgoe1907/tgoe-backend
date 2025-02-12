@@ -1,8 +1,8 @@
 {
 	"require" : {
 		"guzzlehttp/guzzle" : "7.7.*",
-		"codeigniter4/framework" : "4.4.*",
-		"aspose-cloud/aspose-words-cloud" : "23.*.*",
+		"codeigniter4/framework" : "4.6.*",
+		"aspose-cloud/aspose-words-cloud" : "25.*.*",
 		"doctrine/orm" : "3.*.*",
 		"doctrine/dbal" : "4.*.*",
 		"symfony/cache": "6.4.*"
@@ -17,5 +17,8 @@
 		"platform": {
 			"php": "8.1.2"
 		}
+	},
+	"require-dev": {
+		"tatter/patches": "^2.1"
 	}
 }
