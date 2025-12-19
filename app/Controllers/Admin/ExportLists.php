@@ -26,8 +26,10 @@ class ExportLists extends BaseController
         if( $year < 2000 ) $year = date('Y');
         $referencetimestamp = mktime(23,59,59,12,31,$year);
         
-        $birthdays = explode(',', $birthdays);
-        array_walk($birthdays, 'intval');
+        if( strlen(trim($birthdays)) > 0) {
+            $birthdays = explode(',', $birthdays);
+            array_walk($birthdays, 'intval');
+        } 
         
         //get all members
         $srvM = new MemberService();
@@ -38,7 +40,7 @@ class ExportLists extends BaseController
             $age = $m->getAge($referencetimestamp);
             
             //in case only special birthdays should be exported
-            if( count($birthdays) > 0) { 
+            if( is_array($birthdays) ) { 
                 if( !in_array($age, $birthdays)) continue; //skip if not needed
             }
             
@@ -79,8 +81,10 @@ class ExportLists extends BaseController
         if( $year < 2000 ) $year = date('Y');
         $referencetimestamp = mktime(23,59,59,12,31,$year);
         
-        $jubilees = explode(',', $jubilees);
-        array_walk($jubilees, 'intval');
+        if( strlen(trim($jubilees)) > 0) {
+            $jubilees = explode(',', $jubilees);
+            array_walk($jubilees, 'intval');
+        }
         
         //get all members
         $srvM = new MemberService();
@@ -91,7 +95,7 @@ class ExportLists extends BaseController
             $age = $m->getMembershipYears($referencetimestamp);
             
             //in case only special birthdays should be exported
-            if( count($jubilees) > 0) {
+            if( is_array($jubilees) > 0) {
                 if( !in_array($age, $jubilees)) continue; //skip if not needed
             }
             
