@@ -19,7 +19,7 @@ password = secret_pass
 
 [easyverein]
 ;This section contains configuration values related to club management application EasyVerein (http://www.easyverein.com)
-serviceurl = https://hexa.easyverein.com/api/v1.7/
+serviceurl = https://hexa.easyverein.com/api/v2.0/
 
 [aspose]
 ;This section contains configuration for usage of document processing services at https://www.aspose.cloud/
