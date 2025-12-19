@@ -24,7 +24,9 @@ $routes->get('/admin/division-statistics', 'Admin\DivisionStatistics::index');
 $routes->get('/admin/export-lists', 'Admin\ExportLists::index');
 $routes->get('/admin/export-lists/yearbook-recipients', 'Admin\ExportLists::yearbookRecipients');
 $routes->get('/admin/export-lists/birthday/(:segment)/(:segment)', 'Admin\ExportLists::birthday/$1/$2');
+$routes->get('/admin/export-lists/birthday/(:segment)', 'Admin\ExportLists::birthday/$1');
 $routes->get('/admin/export-lists/jubilee/(:segment)/(:segment)', 'Admin\ExportLists::jubilee/$1/$2');
+$routes->get('/admin/export-lists/jubilee/(:segment)', 'Admin\ExportLists::jubilee/$1');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

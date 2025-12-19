@@ -9,7 +9,7 @@ use TgoeSrv\Member\Enums\ValidationSeverity;
 
 class SportsClassGroupCustomPropertiesValidator extends MemberGroupValidator
 {
-    private static $knownSports = array('neutral', 'Judo', 'Turnen', 'Leichtathletik', 'Radsport', 'Rasenkraftsport', 'Ski', 'Volleyball', 'Behindertensport');
+    private static $knownSports = array('neutral', 'Ju-Jutsu', 'Turnen', 'Leichtathletik', 'Radsport', 'Rasenkraftsport', 'Ski', 'Volleyball', 'Körperbehinderte');
     
     private static $mandatoryProperties = [
         MemberGroupCustomProperty::TRAINER,
